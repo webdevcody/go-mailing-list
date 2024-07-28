@@ -7,38 +7,47 @@ import (
 )
 
 templ contents(emails []dataAccess.Email) {
-	<div class="space-y-8">
-		<h1 class="text-4xl">Mailing List</h1>
-		<section>
+	<div class="space-y-12 p-12">
+		<section class="space-y-4">
+			<h1 class="text-4xl">Mailing List</h1>
 			<form
 				action="/actions/add-email"
 				method="POST"
-				class="flex flex-col"
+				class="flex flex-col gap-4"
 			>
-				<label htmlFor="emails">Emails (comma separated)</label>
+				<label htmlFor="emails">Emails (new line per email)</label>
 				<textarea
 					id="emails"
 					required
 					name="emails"
-					placeholder="test@example.com\nyolo@example.com"
+					class="textarea textarea-bordered"
+					placeholder="test@example.com"
 				></textarea>
 				<button class="btn" type="submit">
 					Add Email
 				</button>
 			</form>
 		</section>
-		for _, item := range emails {
-			<li>
-				{ item.Email }
-				<form
-					action="/actions/delete-email"
-					method="POST"
-				>
-					<button class="btn">X</button>
-					<input type="hidden" name="id" value={ strconv.FormatInt(item.Id, 10) }/>
-				</form>
-			</li>
-		}
+		<section class="space-y-4">
+			<h2 class="text-2xl">Current List</h2>
+			<ul class="flex flex-wrap gap-4">
+				for _, item := range emails {
+					<li class="list-none">
+						<div class="badge p-4 flex items-center gap-2">
+							{ item.Email }
+							<form
+								action="/actions/delete-email"
+								method="POST"
+								class="flex items-center"
+							>
+								<button class="block btn btn-xs btn-error">X</button>
+								<input type="hidden" name="id" value={ strconv.FormatInt(item.Id, 10) }/>
+							</form>
+						</div>
+					</li>
+				}
+			</ul>
+		</section>
 	</div>
 }
 

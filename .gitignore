@@ -2,3 +2,4 @@ node_modules/
 tmp/
 **/*templ.go
 **/*templ.txt
+mailing-list.db
