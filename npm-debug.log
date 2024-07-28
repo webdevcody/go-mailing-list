@@ -1,0 +1,548 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/bin/node',
+1 verbose cli   '/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/bin/npm',
+1 verbose cli   'i',
+1 verbose cli   'daisyui',
+1 verbose cli   'tailwindcss' ]
+2 info using npm@3.8.6
+3 info using node@v5.12.0
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData daisyui
+8 silly fetchPackageMetaData tailwindcss
+9 silly fetchNamedPackageData daisyui
+10 silly mapToRegistry name daisyui
+11 silly mapToRegistry using default registry
+12 silly mapToRegistry registry https://registry.npmjs.org/
+13 silly mapToRegistry data Result {
+13 silly mapToRegistry   raw: 'daisyui',
+13 silly mapToRegistry   scope: null,
+13 silly mapToRegistry   name: 'daisyui',
+13 silly mapToRegistry   rawSpec: '',
+13 silly mapToRegistry   spec: 'latest',
+13 silly mapToRegistry   type: 'tag' }
+14 silly mapToRegistry uri https://registry.npmjs.org/daisyui
+15 silly fetchNamedPackageData tailwindcss
+16 silly mapToRegistry name tailwindcss
+17 silly mapToRegistry using default registry
+18 silly mapToRegistry registry https://registry.npmjs.org/
+19 silly mapToRegistry data Result {
+19 silly mapToRegistry   raw: 'tailwindcss',
+19 silly mapToRegistry   scope: null,
+19 silly mapToRegistry   name: 'tailwindcss',
+19 silly mapToRegistry   rawSpec: '',
+19 silly mapToRegistry   spec: 'latest',
+19 silly mapToRegistry   type: 'tag' }
+20 silly mapToRegistry uri https://registry.npmjs.org/tailwindcss
+21 verbose request uri https://registry.npmjs.org/daisyui
+22 verbose request no auth needed
+23 info attempt registry request try #1 at 10:32:52 AM
+24 verbose request id 4213cb3ec527f105
+25 http request GET https://registry.npmjs.org/daisyui
+26 verbose request uri https://registry.npmjs.org/tailwindcss
+27 verbose request no auth needed
+28 info attempt registry request try #1 at 10:32:52 AM
+29 http request GET https://registry.npmjs.org/tailwindcss
+30 http 200 https://registry.npmjs.org/daisyui
+31 verbose headers { date: 'Sun, 28 Jul 2024 14:32:53 GMT',
+31 verbose headers   'content-type': 'application/json',
+31 verbose headers   'transfer-encoding': 'chunked',
+31 verbose headers   connection: 'keep-alive',
+31 verbose headers   'cf-ray': '8aa594c39be23be5-MEM',
+31 verbose headers   'cf-cache-status': 'REVALIDATED',
+31 verbose headers   'access-control-allow-origin': '*',
+31 verbose headers   'cache-control': 'public, max-age=300',
+31 verbose headers   etag: 'W/"15a632896e9580742541c5faacce2d8a"',
+31 verbose headers   'last-modified': 'Wed, 26 Jun 2024 19:30:29 GMT',
+31 verbose headers   vary: 'accept-encoding, accept',
+31 verbose headers   server: 'cloudflare',
+31 verbose headers   'content-encoding': 'gzip' }
+32 silly get cb [ 200,
+32 silly get   { date: 'Sun, 28 Jul 2024 14:32:53 GMT',
+32 silly get     'content-type': 'application/json',
+32 silly get     'transfer-encoding': 'chunked',
+32 silly get     connection: 'keep-alive',
+32 silly get     'cf-ray': '8aa594c39be23be5-MEM',
+32 silly get     'cf-cache-status': 'REVALIDATED',
+32 silly get     'access-control-allow-origin': '*',
+32 silly get     'cache-control': 'public, max-age=300',
+32 silly get     etag: 'W/"15a632896e9580742541c5faacce2d8a"',
+32 silly get     'last-modified': 'Wed, 26 Jun 2024 19:30:29 GMT',
+32 silly get     vary: 'accept-encoding, accept',
+32 silly get     server: 'cloudflare',
+32 silly get     'content-encoding': 'gzip' } ]
+33 verbose get saving daisyui to /Users/webdevcody/.npm/registry.npmjs.org/daisyui/.cache.json
+34 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+35 http 200 https://registry.npmjs.org/tailwindcss
+36 verbose headers { date: 'Sun, 28 Jul 2024 14:32:53 GMT',
+36 verbose headers   'content-type': 'application/json',
+36 verbose headers   'transfer-encoding': 'chunked',
+36 verbose headers   connection: 'keep-alive',
+36 verbose headers   'cf-ray': '8aa594c38aa13be7-MEM',
+36 verbose headers   'cf-cache-status': 'HIT',
+36 verbose headers   'access-control-allow-origin': '*',
+36 verbose headers   'cache-control': 'public, max-age=300',
+36 verbose headers   etag: 'W/"c009a3f8a50f101b48d63510b558dbd3"',
+36 verbose headers   'last-modified': 'Thu, 25 Jul 2024 14:33:12 GMT',
+36 verbose headers   vary: 'accept-encoding, accept',
+36 verbose headers   server: 'cloudflare',
+36 verbose headers   'content-encoding': 'gzip' }
+37 silly get cb [ 200,
+37 silly get   { date: 'Sun, 28 Jul 2024 14:32:53 GMT',
+37 silly get     'content-type': 'application/json',
+37 silly get     'transfer-encoding': 'chunked',
+37 silly get     connection: 'keep-alive',
+37 silly get     'cf-ray': '8aa594c38aa13be7-MEM',
+37 silly get     'cf-cache-status': 'HIT',
+37 silly get     'access-control-allow-origin': '*',
+37 silly get     'cache-control': 'public, max-age=300',
+37 silly get     etag: 'W/"c009a3f8a50f101b48d63510b558dbd3"',
+37 silly get     'last-modified': 'Thu, 25 Jul 2024 14:33:12 GMT',
+37 silly get     vary: 'accept-encoding, accept',
+37 silly get     server: 'cloudflare',
+37 silly get     'content-encoding': 'gzip' } ]
+38 verbose get saving tailwindcss to /Users/webdevcody/.npm/registry.npmjs.org/tailwindcss/.cache.json
+39 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+40 silly install normalizeTree
+41 silly loadCurrentTree Finishing
+42 silly loadIdealTree Starting
+43 silly install loadIdealTree
+44 silly cloneCurrentTree Starting
+45 silly install cloneCurrentTreeToIdealTree
+46 silly cloneCurrentTree Finishing
+47 silly loadShrinkwrap Starting
+48 silly install loadShrinkwrap
+49 silly loadShrinkwrap Finishing
+50 silly loadAllDepsIntoIdealTree Starting
+51 silly install loadAllDepsIntoIdealTree
+52 silly resolveWithNewModule daisyui@4.12.10 checking installable status
+53 silly cache add args [ 'daisyui', null ]
+54 verbose cache add spec daisyui
+55 silly resolveWithNewModule tailwindcss@3.4.7 checking installable status
+56 silly cache add args [ 'tailwindcss', null ]
+57 verbose cache add spec tailwindcss
+58 silly cache add parsed spec Result {
+58 silly cache add   raw: 'daisyui',
+58 silly cache add   scope: null,
+58 silly cache add   name: 'daisyui',
+58 silly cache add   rawSpec: '',
+58 silly cache add   spec: 'latest',
+58 silly cache add   type: 'tag' }
+59 silly addNamed daisyui@latest
+60 verbose addNamed "latest" is being treated as a dist-tag for daisyui
+61 info addNameTag [ 'daisyui', 'latest' ]
+62 silly mapToRegistry name daisyui
+63 silly mapToRegistry using default registry
+64 silly mapToRegistry registry https://registry.npmjs.org/
+65 silly mapToRegistry data Result {
+65 silly mapToRegistry   raw: 'daisyui',
+65 silly mapToRegistry   scope: null,
+65 silly mapToRegistry   name: 'daisyui',
+65 silly mapToRegistry   rawSpec: '',
+65 silly mapToRegistry   spec: 'latest',
+65 silly mapToRegistry   type: 'tag' }
+66 silly mapToRegistry uri https://registry.npmjs.org/daisyui
+67 verbose addNameTag registry:https://registry.npmjs.org/daisyui not in flight; fetching
+68 silly cache add parsed spec Result {
+68 silly cache add   raw: 'tailwindcss',
+68 silly cache add   scope: null,
+68 silly cache add   name: 'tailwindcss',
+68 silly cache add   rawSpec: '',
+68 silly cache add   spec: 'latest',
+68 silly cache add   type: 'tag' }
+69 silly addNamed tailwindcss@latest
+70 verbose addNamed "latest" is being treated as a dist-tag for tailwindcss
+71 info addNameTag [ 'tailwindcss', 'latest' ]
+72 silly mapToRegistry name tailwindcss
+73 silly mapToRegistry using default registry
+74 silly mapToRegistry registry https://registry.npmjs.org/
+75 silly mapToRegistry data Result {
+75 silly mapToRegistry   raw: 'tailwindcss',
+75 silly mapToRegistry   scope: null,
+75 silly mapToRegistry   name: 'tailwindcss',
+75 silly mapToRegistry   rawSpec: '',
+75 silly mapToRegistry   spec: 'latest',
+75 silly mapToRegistry   type: 'tag' }
+76 silly mapToRegistry uri https://registry.npmjs.org/tailwindcss
+77 verbose addNameTag registry:https://registry.npmjs.org/tailwindcss not in flight; fetching
+78 verbose get https://registry.npmjs.org/daisyui not expired, no request
+79 silly addNameTag next cb for daisyui with tag latest
+80 silly addNamed daisyui@4.12.10
+81 verbose addNamed "4.12.10" is a plain semver version for daisyui
+82 silly mapToRegistry name daisyui
+83 silly mapToRegistry using default registry
+84 silly mapToRegistry registry https://registry.npmjs.org/
+85 silly mapToRegistry data Result {
+85 silly mapToRegistry   raw: 'daisyui',
+85 silly mapToRegistry   scope: null,
+85 silly mapToRegistry   name: 'daisyui',
+85 silly mapToRegistry   rawSpec: '',
+85 silly mapToRegistry   spec: 'latest',
+85 silly mapToRegistry   type: 'tag' }
+86 silly mapToRegistry uri https://registry.npmjs.org/daisyui
+87 verbose addRemoteTarball https://registry.npmjs.org/daisyui/-/daisyui-4.12.10.tgz not in flight; adding
+88 verbose addRemoteTarball [ 'https://registry.npmjs.org/daisyui/-/daisyui-4.12.10.tgz',
+88 verbose addRemoteTarball   'fc26b6da72c5855f4677d2f100f02e06c8e8a70f' ]
+89 verbose get https://registry.npmjs.org/tailwindcss not expired, no request
+90 silly addNameTag next cb for tailwindcss with tag latest
+91 silly addNamed tailwindcss@3.4.7
+92 verbose addNamed "3.4.7" is a plain semver version for tailwindcss
+93 silly mapToRegistry name tailwindcss
+94 silly mapToRegistry using default registry
+95 silly mapToRegistry registry https://registry.npmjs.org/
+96 silly mapToRegistry data Result {
+96 silly mapToRegistry   raw: 'tailwindcss',
+96 silly mapToRegistry   scope: null,
+96 silly mapToRegistry   name: 'tailwindcss',
+96 silly mapToRegistry   rawSpec: '',
+96 silly mapToRegistry   spec: 'latest',
+96 silly mapToRegistry   type: 'tag' }
+97 silly mapToRegistry uri https://registry.npmjs.org/tailwindcss
+98 verbose addRemoteTarball https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.7.tgz not in flight; adding
+99 verbose addRemoteTarball [ 'https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.7.tgz',
+99 verbose addRemoteTarball   '6092f18767f5933f59375b9afe558e592fc77201' ]
+100 info retry fetch attempt 1 at 10:32:54 AM
+101 info attempt registry request try #1 at 10:32:54 AM
+102 http fetch GET https://registry.npmjs.org/daisyui/-/daisyui-4.12.10.tgz
+103 info retry fetch attempt 1 at 10:32:54 AM
+104 info attempt registry request try #1 at 10:32:54 AM
+105 http fetch GET https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.7.tgz
+106 http fetch 200 https://registry.npmjs.org/daisyui/-/daisyui-4.12.10.tgz
+107 http fetch 200 https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.7.tgz
+108 silly fetchAndShaCheck shasum fc26b6da72c5855f4677d2f100f02e06c8e8a70f
+109 verbose addTmpTarball /var/folders/yk/56l0_s6978qfh521xf1dtx3r0000gn/T/npm-43426-55522ad5/registry.npmjs.org/daisyui/-/daisyui-4.12.10.tgz not in flight; adding
+110 verbose addTmpTarball already have metadata; skipping unpack for daisyui@4.12.10
+111 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+112 silly cache afterAdd daisyui@4.12.10
+113 verbose afterAdd /Users/webdevcody/.npm/daisyui/4.12.10/package/package.json not in flight; writing
+114 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+115 verbose afterAdd /Users/webdevcody/.npm/daisyui/4.12.10/package/package.json written
+116 silly fetchAndShaCheck shasum 6092f18767f5933f59375b9afe558e592fc77201
+117 verbose addTmpTarball /var/folders/yk/56l0_s6978qfh521xf1dtx3r0000gn/T/npm-43426-55522ad5/registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.7.tgz not in flight; adding
+118 verbose addTmpTarball already have metadata; skipping unpack for tailwindcss@3.4.7
+119 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+120 silly cache afterAdd tailwindcss@3.4.7
+121 verbose afterAdd /Users/webdevcody/.npm/tailwindcss/3.4.7/package/package.json not in flight; writing
+122 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+123 verbose afterAdd /Users/webdevcody/.npm/tailwindcss/3.4.7/package/package.json written
+124 silly fetchNamedPackageData css-selector-tokenizer
+125 silly mapToRegistry name css-selector-tokenizer
+126 silly mapToRegistry using default registry
+127 silly mapToRegistry registry https://registry.npmjs.org/
+128 silly mapToRegistry data Result {
+128 silly mapToRegistry   raw: 'css-selector-tokenizer',
+128 silly mapToRegistry   scope: null,
+128 silly mapToRegistry   name: 'css-selector-tokenizer',
+128 silly mapToRegistry   rawSpec: '',
+128 silly mapToRegistry   spec: 'latest',
+128 silly mapToRegistry   type: 'tag' }
+129 silly mapToRegistry uri https://registry.npmjs.org/css-selector-tokenizer
+130 silly fetchNamedPackageData culori
+131 silly mapToRegistry name culori
+132 silly mapToRegistry using default registry
+133 silly mapToRegistry registry https://registry.npmjs.org/
+134 silly mapToRegistry data Result {
+134 silly mapToRegistry   raw: 'culori',
+134 silly mapToRegistry   scope: null,
+134 silly mapToRegistry   name: 'culori',
+134 silly mapToRegistry   rawSpec: '',
+134 silly mapToRegistry   spec: 'latest',
+134 silly mapToRegistry   type: 'tag' }
+135 silly mapToRegistry uri https://registry.npmjs.org/culori
+136 silly fetchNamedPackageData picocolors
+137 silly mapToRegistry name picocolors
+138 silly mapToRegistry using default registry
+139 silly mapToRegistry registry https://registry.npmjs.org/
+140 silly mapToRegistry data Result {
+140 silly mapToRegistry   raw: 'picocolors',
+140 silly mapToRegistry   scope: null,
+140 silly mapToRegistry   name: 'picocolors',
+140 silly mapToRegistry   rawSpec: '',
+140 silly mapToRegistry   spec: 'latest',
+140 silly mapToRegistry   type: 'tag' }
+141 silly mapToRegistry uri https://registry.npmjs.org/picocolors
+142 silly fetchNamedPackageData postcss-js
+143 silly mapToRegistry name postcss-js
+144 silly mapToRegistry using default registry
+145 silly mapToRegistry registry https://registry.npmjs.org/
+146 silly mapToRegistry data Result {
+146 silly mapToRegistry   raw: 'postcss-js',
+146 silly mapToRegistry   scope: null,
+146 silly mapToRegistry   name: 'postcss-js',
+146 silly mapToRegistry   rawSpec: '',
+146 silly mapToRegistry   spec: 'latest',
+146 silly mapToRegistry   type: 'tag' }
+147 silly mapToRegistry uri https://registry.npmjs.org/postcss-js
+148 verbose request uri https://registry.npmjs.org/css-selector-tokenizer
+149 verbose request no auth needed
+150 info attempt registry request try #1 at 10:32:54 AM
+151 http request GET https://registry.npmjs.org/css-selector-tokenizer
+152 verbose request uri https://registry.npmjs.org/culori
+153 verbose request no auth needed
+154 info attempt registry request try #1 at 10:32:54 AM
+155 http request GET https://registry.npmjs.org/culori
+156 verbose request uri https://registry.npmjs.org/picocolors
+157 verbose request no auth needed
+158 info attempt registry request try #1 at 10:32:54 AM
+159 http request GET https://registry.npmjs.org/picocolors
+160 verbose request uri https://registry.npmjs.org/postcss-js
+161 verbose request no auth needed
+162 info attempt registry request try #1 at 10:32:54 AM
+163 http request GET https://registry.npmjs.org/postcss-js
+164 http 200 https://registry.npmjs.org/css-selector-tokenizer
+165 verbose headers { date: 'Sun, 28 Jul 2024 14:32:54 GMT',
+165 verbose headers   'content-type': 'application/json',
+165 verbose headers   'transfer-encoding': 'chunked',
+165 verbose headers   connection: 'keep-alive',
+165 verbose headers   'cf-ray': '8aa594cd4e2c3be7-MEM',
+165 verbose headers   'cf-cache-status': 'HIT',
+165 verbose headers   'access-control-allow-origin': '*',
+165 verbose headers   'cache-control': 'public, max-age=300',
+165 verbose headers   etag: 'W/"18bdc2d2fa6f23da2bbea0ea8f525e85"',
+165 verbose headers   'last-modified': 'Tue, 14 Jun 2022 04:49:17 GMT',
+165 verbose headers   vary: 'accept-encoding, accept',
+165 verbose headers   server: 'cloudflare',
+165 verbose headers   'content-encoding': 'gzip' }
+166 silly get cb [ 200,
+166 silly get   { date: 'Sun, 28 Jul 2024 14:32:54 GMT',
+166 silly get     'content-type': 'application/json',
+166 silly get     'transfer-encoding': 'chunked',
+166 silly get     connection: 'keep-alive',
+166 silly get     'cf-ray': '8aa594cd4e2c3be7-MEM',
+166 silly get     'cf-cache-status': 'HIT',
+166 silly get     'access-control-allow-origin': '*',
+166 silly get     'cache-control': 'public, max-age=300',
+166 silly get     etag: 'W/"18bdc2d2fa6f23da2bbea0ea8f525e85"',
+166 silly get     'last-modified': 'Tue, 14 Jun 2022 04:49:17 GMT',
+166 silly get     vary: 'accept-encoding, accept',
+166 silly get     server: 'cloudflare',
+166 silly get     'content-encoding': 'gzip' } ]
+167 verbose get saving css-selector-tokenizer to /Users/webdevcody/.npm/registry.npmjs.org/css-selector-tokenizer/.cache.json
+168 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+169 silly resolveWithNewModule css-selector-tokenizer@0.8.0 checking installable status
+170 silly cache add args [ 'css-selector-tokenizer@^0.8', null ]
+171 verbose cache add spec css-selector-tokenizer@^0.8
+172 silly cache add parsed spec Result {
+172 silly cache add   raw: 'css-selector-tokenizer@^0.8',
+172 silly cache add   scope: null,
+172 silly cache add   name: 'css-selector-tokenizer',
+172 silly cache add   rawSpec: '^0.8',
+172 silly cache add   spec: '>=0.8.0 <0.9.0',
+172 silly cache add   type: 'range' }
+173 silly addNamed css-selector-tokenizer@>=0.8.0 <0.9.0
+174 verbose addNamed ">=0.8.0 <0.9.0" is a valid semver range for css-selector-tokenizer
+175 silly addNameRange { name: 'css-selector-tokenizer',
+175 silly addNameRange   range: '>=0.8.0 <0.9.0',
+175 silly addNameRange   hasData: false }
+176 silly mapToRegistry name css-selector-tokenizer
+177 silly mapToRegistry using default registry
+178 silly mapToRegistry registry https://registry.npmjs.org/
+179 silly mapToRegistry data Result {
+179 silly mapToRegistry   raw: 'css-selector-tokenizer',
+179 silly mapToRegistry   scope: null,
+179 silly mapToRegistry   name: 'css-selector-tokenizer',
+179 silly mapToRegistry   rawSpec: '',
+179 silly mapToRegistry   spec: 'latest',
+179 silly mapToRegistry   type: 'tag' }
+180 silly mapToRegistry uri https://registry.npmjs.org/css-selector-tokenizer
+181 verbose addNameRange registry:https://registry.npmjs.org/css-selector-tokenizer not in flight; fetching
+182 verbose get https://registry.npmjs.org/css-selector-tokenizer not expired, no request
+183 silly addNameRange number 2 { name: 'css-selector-tokenizer',
+183 silly addNameRange   range: '>=0.8.0 <0.9.0',
+183 silly addNameRange   hasData: true }
+184 silly addNameRange versions [ 'css-selector-tokenizer',
+184 silly addNameRange   [ '0.1.0',
+184 silly addNameRange     '0.2.0',
+184 silly addNameRange     '0.2.1',
+184 silly addNameRange     '0.3.0',
+184 silly addNameRange     '0.3.1',
+184 silly addNameRange     '0.4.0',
+184 silly addNameRange     '0.4.1',
+184 silly addNameRange     '0.5.0',
+184 silly addNameRange     '0.5.1',
+184 silly addNameRange     '0.5.2',
+184 silly addNameRange     '0.5.3',
+184 silly addNameRange     '0.5.4',
+184 silly addNameRange     '0.6.0',
+184 silly addNameRange     '0.7.0',
+184 silly addNameRange     '0.7.1',
+184 silly addNameRange     '0.7.2',
+184 silly addNameRange     '0.7.3',
+184 silly addNameRange     '0.8.0' ] ]
+185 silly addNamed css-selector-tokenizer@0.8.0
+186 verbose addNamed "0.8.0" is a plain semver version for css-selector-tokenizer
+187 silly mapToRegistry name css-selector-tokenizer
+188 silly mapToRegistry using default registry
+189 silly mapToRegistry registry https://registry.npmjs.org/
+190 silly mapToRegistry data Result {
+190 silly mapToRegistry   raw: 'css-selector-tokenizer',
+190 silly mapToRegistry   scope: null,
+190 silly mapToRegistry   name: 'css-selector-tokenizer',
+190 silly mapToRegistry   rawSpec: '',
+190 silly mapToRegistry   spec: 'latest',
+190 silly mapToRegistry   type: 'tag' }
+191 silly mapToRegistry uri https://registry.npmjs.org/css-selector-tokenizer
+192 verbose addRemoteTarball https://registry.npmjs.org/css-selector-tokenizer/-/css-selector-tokenizer-0.8.0.tgz not in flight; adding
+193 verbose addRemoteTarball [ 'https://registry.npmjs.org/css-selector-tokenizer/-/css-selector-tokenizer-0.8.0.tgz',
+193 verbose addRemoteTarball   '88267ef6238e64f2215ea2764b3e2cf498b845dd' ]
+194 info retry fetch attempt 1 at 10:32:54 AM
+195 info attempt registry request try #1 at 10:32:54 AM
+196 http fetch GET https://registry.npmjs.org/css-selector-tokenizer/-/css-selector-tokenizer-0.8.0.tgz
+197 http 200 https://registry.npmjs.org/picocolors
+198 verbose headers { date: 'Sun, 28 Jul 2024 14:32:54 GMT',
+198 verbose headers   'content-type': 'application/json',
+198 verbose headers   'transfer-encoding': 'chunked',
+198 verbose headers   connection: 'keep-alive',
+198 verbose headers   'cf-ray': '8aa594cddbf43bdf-MEM',
+198 verbose headers   'cf-cache-status': 'HIT',
+198 verbose headers   'access-control-allow-origin': '*',
+198 verbose headers   'cache-control': 'public, max-age=300',
+198 verbose headers   etag: 'W/"735390dce149fa32a532baf765ef2968"',
+198 verbose headers   'last-modified': 'Tue, 14 May 2024 02:44:17 GMT',
+198 verbose headers   vary: 'accept-encoding, accept',
+198 verbose headers   server: 'cloudflare',
+198 verbose headers   'content-encoding': 'gzip' }
+199 silly get cb [ 200,
+199 silly get   { date: 'Sun, 28 Jul 2024 14:32:54 GMT',
+199 silly get     'content-type': 'application/json',
+199 silly get     'transfer-encoding': 'chunked',
+199 silly get     connection: 'keep-alive',
+199 silly get     'cf-ray': '8aa594cddbf43bdf-MEM',
+199 silly get     'cf-cache-status': 'HIT',
+199 silly get     'access-control-allow-origin': '*',
+199 silly get     'cache-control': 'public, max-age=300',
+199 silly get     etag: 'W/"735390dce149fa32a532baf765ef2968"',
+199 silly get     'last-modified': 'Tue, 14 May 2024 02:44:17 GMT',
+199 silly get     vary: 'accept-encoding, accept',
+199 silly get     server: 'cloudflare',
+199 silly get     'content-encoding': 'gzip' } ]
+200 verbose get saving picocolors to /Users/webdevcody/.npm/registry.npmjs.org/picocolors/.cache.json
+201 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+202 silly resolveWithNewModule picocolors@1.0.1 checking installable status
+203 silly cache add args [ 'picocolors@^1', null ]
+204 verbose cache add spec picocolors@^1
+205 silly cache add parsed spec Result {
+205 silly cache add   raw: 'picocolors@^1',
+205 silly cache add   scope: null,
+205 silly cache add   name: 'picocolors',
+205 silly cache add   rawSpec: '^1',
+205 silly cache add   spec: '>=1.0.0 <2.0.0',
+205 silly cache add   type: 'range' }
+206 silly addNamed picocolors@>=1.0.0 <2.0.0
+207 verbose addNamed ">=1.0.0 <2.0.0" is a valid semver range for picocolors
+208 silly addNameRange { name: 'picocolors', range: '>=1.0.0 <2.0.0', hasData: false }
+209 silly mapToRegistry name picocolors
+210 silly mapToRegistry using default registry
+211 silly mapToRegistry registry https://registry.npmjs.org/
+212 silly mapToRegistry data Result {
+212 silly mapToRegistry   raw: 'picocolors',
+212 silly mapToRegistry   scope: null,
+212 silly mapToRegistry   name: 'picocolors',
+212 silly mapToRegistry   rawSpec: '',
+212 silly mapToRegistry   spec: 'latest',
+212 silly mapToRegistry   type: 'tag' }
+213 silly mapToRegistry uri https://registry.npmjs.org/picocolors
+214 verbose addNameRange registry:https://registry.npmjs.org/picocolors not in flight; fetching
+215 verbose get https://registry.npmjs.org/picocolors not expired, no request
+216 silly addNameRange number 2 { name: 'picocolors', range: '>=1.0.0 <2.0.0', hasData: true }
+217 silly addNameRange versions [ 'picocolors',
+217 silly addNameRange   [ '0.0.0', '0.0.1', '0.1.0', '0.2.0', '0.2.1', '1.0.0', '1.0.1' ] ]
+218 silly addNamed picocolors@1.0.1
+219 verbose addNamed "1.0.1" is a plain semver version for picocolors
+220 silly mapToRegistry name picocolors
+221 silly mapToRegistry using default registry
+222 silly mapToRegistry registry https://registry.npmjs.org/
+223 silly mapToRegistry data Result {
+223 silly mapToRegistry   raw: 'picocolors',
+223 silly mapToRegistry   scope: null,
+223 silly mapToRegistry   name: 'picocolors',
+223 silly mapToRegistry   rawSpec: '',
+223 silly mapToRegistry   spec: 'latest',
+223 silly mapToRegistry   type: 'tag' }
+224 silly mapToRegistry uri https://registry.npmjs.org/picocolors
+225 verbose addRemoteTarball https://registry.npmjs.org/picocolors/-/picocolors-1.0.1.tgz not in flight; adding
+226 verbose addRemoteTarball [ 'https://registry.npmjs.org/picocolors/-/picocolors-1.0.1.tgz',
+226 verbose addRemoteTarball   'a8ad579b571952f0e5d25892de5445bcfe25aaa1' ]
+227 info retry fetch attempt 1 at 10:32:54 AM
+228 info attempt registry request try #1 at 10:32:54 AM
+229 http fetch GET https://registry.npmjs.org/picocolors/-/picocolors-1.0.1.tgz
+230 http fetch 200 https://registry.npmjs.org/css-selector-tokenizer/-/css-selector-tokenizer-0.8.0.tgz
+231 silly fetchAndShaCheck shasum 88267ef6238e64f2215ea2764b3e2cf498b845dd
+232 verbose addTmpTarball /var/folders/yk/56l0_s6978qfh521xf1dtx3r0000gn/T/npm-43426-55522ad5/registry.npmjs.org/css-selector-tokenizer/-/css-selector-tokenizer-0.8.0.tgz not in flight; adding
+233 verbose addTmpTarball already have metadata; skipping unpack for css-selector-tokenizer@0.8.0
+234 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+235 silly cache afterAdd css-selector-tokenizer@0.8.0
+236 verbose afterAdd /Users/webdevcody/.npm/css-selector-tokenizer/0.8.0/package/package.json not in flight; writing
+237 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+238 verbose afterAdd /Users/webdevcody/.npm/css-selector-tokenizer/0.8.0/package/package.json written
+239 http fetch 200 https://registry.npmjs.org/picocolors/-/picocolors-1.0.1.tgz
+240 silly fetchAndShaCheck shasum a8ad579b571952f0e5d25892de5445bcfe25aaa1
+241 verbose addTmpTarball /var/folders/yk/56l0_s6978qfh521xf1dtx3r0000gn/T/npm-43426-55522ad5/registry.npmjs.org/picocolors/-/picocolors-1.0.1.tgz not in flight; adding
+242 verbose addTmpTarball already have metadata; skipping unpack for picocolors@1.0.1
+243 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+244 silly cache afterAdd picocolors@1.0.1
+245 verbose afterAdd /Users/webdevcody/.npm/picocolors/1.0.1/package/package.json not in flight; writing
+246 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+247 verbose afterAdd /Users/webdevcody/.npm/picocolors/1.0.1/package/package.json written
+248 http 200 https://registry.npmjs.org/culori
+249 verbose headers { date: 'Sun, 28 Jul 2024 14:32:54 GMT',
+249 verbose headers   'content-type': 'application/json',
+249 verbose headers   'transfer-encoding': 'chunked',
+249 verbose headers   connection: 'keep-alive',
+249 verbose headers   'cf-ray': '8aa594cd4f273be5-MEM',
+249 verbose headers   'cf-cache-status': 'REVALIDATED',
+249 verbose headers   'access-control-allow-origin': '*',
+249 verbose headers   'cache-control': 'public, max-age=300',
+249 verbose headers   etag: 'W/"f2f78ee9c9aff38ae4104a06bd994635"',
+249 verbose headers   'last-modified': 'Fri, 26 Jan 2024 19:28:09 GMT',
+249 verbose headers   vary: 'accept-encoding, accept',
+249 verbose headers   server: 'cloudflare',
+249 verbose headers   'content-encoding': 'gzip' }
+250 silly get cb [ 200,
+250 silly get   { date: 'Sun, 28 Jul 2024 14:32:54 GMT',
+250 silly get     'content-type': 'application/json',
+250 silly get     'transfer-encoding': 'chunked',
+250 silly get     connection: 'keep-alive',
+250 silly get     'cf-ray': '8aa594cd4f273be5-MEM',
+250 silly get     'cf-cache-status': 'REVALIDATED',
+250 silly get     'access-control-allow-origin': '*',
+250 silly get     'cache-control': 'public, max-age=300',
+250 silly get     etag: 'W/"f2f78ee9c9aff38ae4104a06bd994635"',
+250 silly get     'last-modified': 'Fri, 26 Jan 2024 19:28:09 GMT',
+250 silly get     vary: 'accept-encoding, accept',
+250 silly get     server: 'cloudflare',
+250 silly get     'content-encoding': 'gzip' } ]
+251 verbose get saving culori to /Users/webdevcody/.npm/registry.npmjs.org/culori/.cache.json
+252 verbose correctMkdir /Users/webdevcody/.npm correctMkdir not in flight; initializing
+253 verbose stack Error: Missing required argument #1
+253 verbose stack     at andLogAndFinish (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:31:3)
+253 verbose stack     at fetchPackageMetadata (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:51:22)
+253 verbose stack     at resolveWithNewModule (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/install/deps.js:455:12)
+253 verbose stack     at /Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/install/deps.js:456:7
+253 verbose stack     at /Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/node_modules/iferr/index.js:13:50
+253 verbose stack     at /Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:37:12
+253 verbose stack     at addRequestedAndFinish (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:82:5)
+253 verbose stack     at returnAndAddMetadata (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:117:7)
+253 verbose stack     at pickVersionFromRegistryDocument (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:134:20)
+253 verbose stack     at /Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/node_modules/iferr/index.js:13:50
+254 verbose cwd /Users/webdevcody/Workspace/go-mailing-list
+255 error Darwin 23.3.0
+256 error argv "/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/bin/node" "/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/bin/npm" "i" "daisyui" "tailwindcss"
+257 error node v5.12.0
+258 error npm  v3.8.6
+259 error code EMISSINGARG
+260 error typeerror Error: Missing required argument #1
+260 error typeerror     at andLogAndFinish (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:31:3)
+260 error typeerror     at fetchPackageMetadata (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:51:22)
+260 error typeerror     at resolveWithNewModule (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/install/deps.js:455:12)
+260 error typeerror     at /Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/install/deps.js:456:7
+260 error typeerror     at /Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/node_modules/iferr/index.js:13:50
+260 error typeerror     at /Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:37:12
+260 error typeerror     at addRequestedAndFinish (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:82:5)
+260 error typeerror     at returnAndAddMetadata (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:117:7)
+260 error typeerror     at pickVersionFromRegistryDocument (/Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/lib/fetch-package-metadata.js:134:20)
+260 error typeerror     at /Users/webdevcody/Library/Application Support/Herd/config/nvm/versions/node/v5.12.0/lib/node_modules/npm/node_modules/iferr/index.js:13:50
+261 error typeerror This is an error with npm itself. Please report this error at:
+261 error typeerror     <http://github.com/npm/npm/issues>
+262 verbose exit [ 1, true ]

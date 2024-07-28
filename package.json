@@ -1,0 +1,25 @@
+{
+  "name": "go-mailing-list",
+  "version": "1.0.0",
+  "description": "1. air # terminal 1 2. templ generate --watch # terminal 2",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "tailwind": "tailwindcss -i ./styles.css -o public/styles.css --watch",
+    "build:tailwind": "tailwindcss -i ./styles.css -o public/styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webdevcody/go-mailing-list.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webdevcody/go-mailing-list/issues"
+  },
+  "homepage": "https://github.com/webdevcody/go-mailing-list#readme",
+  "dependencies": {
+    "daisyui": "^4.12.10",
+    "tailwindcss": "^3.4.7"
+  }
+}

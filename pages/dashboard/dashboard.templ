@@ -1,0 +1,43 @@
+package dashboard
+
+import (
+	"github.com/webdevcody/go-mailing-list/components"
+	dataAccess "github.com/webdevcody/go-mailing-list/data-access"
+	"strconv"
+)
+
+templ contents(emails []dataAccess.Email) {
+	<div class="space-y-8">
+		<h1 class="text-4xl">Mailing List</h1>
+		<section>
+			<form action="/actions/add-email" method="POST">
+				<label htmlFor="emails">Emails (comma separated)</label>
+				<textarea
+					id="emails"
+					required
+					name="emails"
+					placeholder="test@example.com\nyolo@example.com"
+				></textarea>
+				<button class="btn" type="submit">
+					Add Email
+				</button>
+			</form>
+		</section>
+		for _, item := range emails {
+			<li>
+				{ item.Email }
+				<form
+					action="/actions/delete-email"
+					method="POST"
+				>
+					<button class="btn">X</button>
+					<input type="hidden" name="id" value={ strconv.FormatInt(item.Id, 10) }/>
+				</form>
+			</li>
+		}
+	</div>
+}
+
+templ dashboard(emails []dataAccess.Email) {
+	@components.Layout(contents(emails))
+}
