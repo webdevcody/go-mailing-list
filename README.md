@@ -1,5 +1,4 @@
 # How to Run
 
-1. air # terminal 1
-2. templ generate --watch # terminal 2
-3. npm run tailwind
+1. make dev
+2. open http://localhost:7331/dashboard
