@@ -32,18 +32,16 @@ templ contents(emails []dataAccess.Email) {
 			<h2 class="text-2xl">Current List</h2>
 			<ul class="flex flex-wrap gap-4">
 				for _, item := range emails {
-					<li class="list-none">
-						<div class="badge p-4 flex items-center gap-2">
-							{ item.Email }
-							<form
-								action="/actions/delete-email"
-								method="POST"
-								class="flex items-center"
-							>
-								<button class="block btn btn-xs btn-error">X</button>
-								<input type="hidden" name="id" value={ strconv.FormatInt(item.Id, 10) }/>
-							</form>
-						</div>
+					<li class="list-none p-4 flex items-center gap-2 bg-base-300 rounded">
+						{ item.Email }
+						<form
+							action="/actions/delete-email"
+							method="POST"
+							class="flex items-center m-0"
+						>
+							<button class="btn btn-xs btn-error">X</button>
+							<input type="hidden" name="id" value={ strconv.FormatInt(item.Id, 10) }/>
+						</form>
 					</li>
 				}
 			</ul>
