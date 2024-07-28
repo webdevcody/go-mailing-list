@@ -10,7 +10,11 @@ templ contents(emails []dataAccess.Email) {
 	<div class="space-y-8">
 		<h1 class="text-4xl">Mailing List</h1>
 		<section>
-			<form action="/actions/add-email" method="POST">
+			<form
+				action="/actions/add-email"
+				method="POST"
+				class="flex flex-col"
+			>
 				<label htmlFor="emails">Emails (comma separated)</label>
 				<textarea
 					id="emails"
