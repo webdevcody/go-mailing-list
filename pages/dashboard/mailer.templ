@@ -1,0 +1,28 @@
+package dashboard
+
+import "github.com/webdevcody/go-mailing-list/components"
+
+templ mailer() {
+	@components.Layout() {
+		<div class="space-y-12 p-12 container mx-auto">
+			@tabs(mailerTab)
+			<h2 class={ "text-2xl" }>Send Emails</h2>
+			<form action="/actions/send-emails" method="POST">
+				<input name="subject" required placeholder="subject"/>
+				<textarea
+					name="html"
+					required
+					placeholder="html format"
+				></textarea>{ " " }
+				<textarea
+					name="text"
+					required
+					placeholder="text format"
+				></textarea>
+				<button class={ "btn" } type="submit">
+					Send Emails
+				</button>
+			</form>
+		</div>
+	}
+}

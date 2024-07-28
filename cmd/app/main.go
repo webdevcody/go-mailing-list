@@ -24,5 +24,4 @@ func main() {
 	addr := os.Getenv("HTTP_LISTEN_ADDR")
 
 	log.Fatal(app.Listen(addr))
-
 }

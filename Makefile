@@ -19,7 +19,8 @@ templ:
 
 server:
 	@go run github.com/cosmtrek/air@v1.51.0 \
-	--build.cmd "go build --tags dev -o ${MAIN_PATH} ./cmd/app/" --build.bin "${MAIN_PATH}" --build.delay "100" \
+	--build.cmd "go build --tags dev -o ${MAIN_PATH} ./cmd/app/" \
+	--build.bin "${MAIN_PATH}" --build.delay "100" \
 	--build.exclude_dir "node_modules" \
 	--build.include_ext "go" \
 	--build.stop_on_error "false" \

@@ -1,7 +1,7 @@
 package components
 
-templ Layout(contents templ.Component) {
-	<html>
+templ Layout() {
+	<html data-theme="forest">
 		<head>
 			<title>Mailing List</title>
 			<meta charset="UTF-8"/>
@@ -11,8 +11,9 @@ templ Layout(contents templ.Component) {
 				rel="stylesheet"
 			/>
 		</head>
-		<body class="bg-black text-white">
-			@contents
+		<body>
+			@header()
+			{ children... }
 		</body>
 	</html>
 }

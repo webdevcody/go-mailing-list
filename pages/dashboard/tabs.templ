@@ -1,0 +1,17 @@
+package dashboard
+
+type tabType string
+
+const (
+	listTab   tabType = "List"
+	mailerTab tabType = "Mailer"
+)
+
+templ tabs(selectedTab tabType) {
+	<div class="space-y-12 p-12 container mx-auto">
+		<div role="tablist" class="tabs tabs-bordered">
+			<a href="/dashboard/list" role="tab" class={ "tab", templ.KV("tab-active", selectedTab == listTab) }>Mailing List</a>
+			<a href="/dashboard/mailer" role="tab" class={ "tab", templ.KV("tab-active", selectedTab == mailerTab) }>Mailer</a>
+		</div>
+	</div>
+}

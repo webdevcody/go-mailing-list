@@ -1,6 +1,7 @@
 package dashboard
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -12,10 +13,10 @@ import (
 )
 
 func RegisterDashboard(app *fiber.App) {
-	app.Get("/dashboard", func(c *fiber.Ctx) error {
+	app.Get("/dashboard/list", func(c *fiber.Ctx) error {
+		fmt.Println("List")
 		emails := dataAccess.GetEmails()
-
-		return utils.Render(c, dashboard(emails))
+		return utils.Render(c, emailList(emails))
 	})
 
 	app.Post("/actions/add-email", func(c *fiber.Ctx) error {
@@ -38,5 +39,22 @@ func RegisterDashboard(app *fiber.App) {
 		}
 		dataAccess.DeleteEmail(emailId)
 		return c.Redirect("/dashboard")
+	})
+
+	app.Get("/dashboard/mailer", func(c *fiber.Ctx) error {
+		fmt.Println("Mailer")
+		return utils.Render(c, mailer())
+	})
+
+	app.Post("/actions/send-emails", func(c *fiber.Ctx) error {
+		subject := c.FormValue("subject")
+		html := c.FormValue("html")
+		text := c.FormValue("text")
+
+		fmt.Println(subject)
+		fmt.Println(html)
+		fmt.Println(text)
+
+		return c.Redirect("/dashboard/mailer")
 	})
 }
