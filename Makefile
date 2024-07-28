@@ -36,11 +36,9 @@ sync_assets:
 build:
 	@npm run build:tailwind
 	@templ generate
-	@go build -o bin/app_prod cmd/app/main.go
+	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/app_prod cmd/app/main.go
 	@echo "compiled you application with all its assets to a single binary => bin/app_prod"
 
 dev:
 	@make -j4 templ server tailwind sync_assets
 	
-start:
-	bin/app_prod
