@@ -42,3 +42,5 @@ build:
 dev:
 	@make -j4 templ server tailwind sync_assets
 	
+start:
+	bin/app_prod
