@@ -1,6 +1,15 @@
 package components
 
-templ Layout() {
+templ Layout(isLoggedIn bool) {
+	@HtmlWrapper() {
+		@header(isLoggedIn)
+		<div class="space-y-12 p-12 container mx-auto">
+			{ children... }
+		</div>
+	}
+}
+
+templ HtmlWrapper() {
 	<html data-theme="forest">
 		<head>
 			<title>Mailing List</title>
@@ -12,7 +21,6 @@ templ Layout() {
 			/>
 		</head>
 		<body>
-			@header()
 			{ children... }
 		</body>
 	</html>

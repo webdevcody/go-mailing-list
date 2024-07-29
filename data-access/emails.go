@@ -9,7 +9,7 @@ type Email struct {
 	Email string
 }
 
-func CreateEmail(email string) {
+func CreateEmail(email string) error {
 	db := db.GetDB()
 	stmt, err := db.Prepare("INSERT INTO emails (email) VALUES (?)")
 	if err != nil {
@@ -17,8 +17,9 @@ func CreateEmail(email string) {
 	}
 	_, err = stmt.Exec(email)
 	if err != nil {
-		panic(err)
+		return err
 	}
+	return nil
 }
 
 func DeleteEmail(id int64) {

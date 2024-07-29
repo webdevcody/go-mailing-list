@@ -1,11 +1,16 @@
 
 package components
 
-templ header() {
-	<header class="navbar bg-base-100">
+templ header(isLoggedIn bool) {
+	<header class="navbar bg-base-300">
 		<div class="container mx-auto">
-			<a href="/dashboard" class="navbar-brand mr-2">Mailing List</a>
-			<a href="/dashboard" class="btn btn-link">Dashboard</a>
+			<div class="flex justify-between w-full">
+				<div>
+					<a href="/dashboard" class="navbar-brand mr-2">Mailing List</a>
+					<a href="/dashboard" class="btn btn-link">Dashboard</a>
+				</div>
+				<a href="/logout" class="btn btn-link">Logout</a>
+			</div>
 		</div>
 	</header>
 }
