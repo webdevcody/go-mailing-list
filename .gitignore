@@ -1,7 +1,7 @@
 node_modules/
 tmp/
-**/*templ.go
-**/*templ.txt
+**/*_templ.go
+**/*_templ.txt
 local.db
 .env
 bin/

@@ -21,7 +21,7 @@ RUN go mod tidy
 COPY . .
 RUN make build
 
-FROM scratch
+FROM golang:1.22.5-bullseye
 WORKDIR /app
 COPY --from=builder /app/bin .
 COPY --from=builder /app/public ./public
