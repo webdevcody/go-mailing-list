@@ -16,6 +16,10 @@ func AssertAuthenticatedMiddleware(c *fiber.Ctx) error {
 }
 
 func IsAuthenticated(c *fiber.Ctx) bool {
+	userSessionId := GetUserSessionId(c)
+	if userSessionId == "" {
+		return false
+	}
 	return GetUserSessionId(c) == activeSessionId
 }
 

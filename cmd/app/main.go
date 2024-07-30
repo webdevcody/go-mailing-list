@@ -10,12 +10,11 @@ import (
 )
 
 func main() {
-	log.Println("HTTP_LISTEN_ADDR: ", os.Getenv("HTTP_LISTEN_ADDR"))
-	log.Println("DATABASE_URL: ", os.Getenv("DATABASE_URL"))
-
 	migrations.RunMigrations()
 
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		Network: fiber.NetworkTCP,
+	})
 
 	app.Static("/public", "./public")
 
