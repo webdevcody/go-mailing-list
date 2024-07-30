@@ -4,13 +4,21 @@ FROM golang:1.22.5-bullseye as base
 FROM base AS builder
 WORKDIR /app
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential pkg-config python-is-python3 
+	apt-get install --no-install-recommends -y build-essential pkg-config python-is-python3 upx
 
-    RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash - && \
-    apt-get install -y nodejs \
-    build-essential && \
-    node --version && \ 
-    npm --version
+RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash - && \
+	apt-get install -y nodejs \
+	build-essential && \
+	node --version && \ 
+	npm --version
+
+# install zig toolchain
+RUN wget https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz && \
+	tar -xf zig-linux-x86_64-0.13.0.tar.xz && \
+	mv zig-linux-x86_64-0.13.0 /usr/local/zig && \
+	rm zig-linux-x86_64-0.13.0.tar.xz && \
+	ln -s /usr/local/zig/zig /usr/local/bin/zig && \
+	zig version
 
 RUN go install github.com/a-h/templ/cmd/templ@latest
 
