@@ -8,9 +8,13 @@ templ mailer(isLoggedIn bool) {
 			@tabs(mailerTab)
 			<h2 class={ "text-2xl" }>Send Emails</h2>
 			<form
-				action="/actions/send-emails"
 				method="POST"
 				class="flex flex-col gap-4"
+				hx-post="/actions/send-emails"
+				hx-swap="none"
+				hx-on::after-request="this.reset()"
+				hx-indicator="find .htmx-indicator"
+				hx-disabled-elt="find button"
 			>
 				<input
 					class="input input-bordered"
@@ -32,6 +36,7 @@ templ mailer(isLoggedIn bool) {
 				></textarea>
 				<button class={ "btn" } type="submit">
 					Send Emails
+					@components.Spinner()
 				</button>
 			</form>
 		</div>

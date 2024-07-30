@@ -22,8 +22,9 @@ func RegisterLogin(app *fiber.App) {
 		if !isValid {
 			return c.Redirect("/login")
 		}
-		auth.SetSession(c, utils.GetRandomUuid())
-		return c.Redirect("/dashboard")
+		auth.SetSession(c)
+		c.Response().Header.Set("HX-Redirect", "/dashboard/list")
+		return c.SendStatus(fiber.StatusNoContent)
 	})
 
 }

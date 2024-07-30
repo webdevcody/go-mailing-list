@@ -6,9 +6,16 @@ templ login(isLoggedIn bool) {
 	@components.Layout(isLoggedIn) {
 		<div class="flex flex-col gap-4">
 			<h1 class="text-4xl">Login</h1>
-			<form action="/actions/login" method="post" class="flex flex-col gap-4">
+			<form hx-disabled-elt="#login-button" hx-post="/actions/login" hx-swap="none" class="flex flex-col gap-4">
 				<input class="input input-bordered w-full max-w-xs" type="password" name="password" placeholder="Password" required="required"/>
-				<button type="submit" class="max-w-sm btn btn-primary btn-block btn-large">Login</button>
+				<button
+					id="login-button"
+					type="submit"
+					class="max-w-sm btn btn-primary btn-block btn-large flex gap-3"
+				>
+					Login
+					@components.Spinner()
+				</button>
 			</form>
 		</div>
 	}

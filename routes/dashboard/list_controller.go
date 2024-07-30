@@ -15,7 +15,7 @@ import (
 func registerListPanel(app *fiber.App) {
 	app.Get("/dashboard/list", auth.AssertAuthenticatedMiddleware, func(c *fiber.Ctx) error {
 		emails := dataAccess.GetEmails()
-		return utils.Render(c, emailList(auth.IsAuthenticated(c), emails))
+		return utils.Render(c, emailListPanel(auth.IsAuthenticated(c), emails))
 	})
 
 	app.Post("/actions/add-email", auth.AssertAuthenticatedMiddleware, func(c *fiber.Ctx) error {
@@ -23,14 +23,16 @@ func registerListPanel(app *fiber.App) {
 
 		emails := strings.Split(formEmails, "\n")
 
+		createdEmails := make([]dataAccess.Email, 0)
+
 		for _, email := range emails {
-			err := dataAccess.CreateEmail(email)
-			if err != nil {
-				return c.Status(400).SendString("Could not add email - is it maybe a duplicate?")
+			newEmail, err := dataAccess.CreateEmail(email)
+			if err == nil {
+				createdEmails = append(createdEmails, newEmail)
 			}
 		}
 
-		return c.Redirect("/dashboard/list")
+		return utils.Render(c, emailList(createdEmails))
 	})
 
 	app.Post("/actions/delete-email", auth.AssertAuthenticatedMiddleware, func(c *fiber.Ctx) error {

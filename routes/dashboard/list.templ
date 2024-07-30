@@ -6,16 +6,20 @@ import (
 	"strconv"
 )
 
-templ emailList(isLoggedIn bool, emails []dataAccess.Email) {
+templ emailListPanel(isLoggedIn bool, emails []dataAccess.Email) {
 	@components.Layout(isLoggedIn) {
 		<div class="space-y-12">
 			@tabs(listTab)
 			<section class="space-y-4">
 				<h1 class="text-2xl">Mailing List</h1>
 				<form
-					action="/actions/add-email"
-					method="POST"
+					hx-post="/actions/add-email"
+					hx-target="#emailList"
+					hx-swap="beforeend"
+					hx-on::after-request="this.reset()"
 					class="flex flex-col gap-4"
+					hx-indicator="find .htmx-indicator"
+					hx-disabled-elt="find button"
 				>
 					<label htmlFor="emails">Emails (new line per email)</label>
 					<textarea
@@ -25,29 +29,39 @@ templ emailList(isLoggedIn bool, emails []dataAccess.Email) {
 						class="textarea textarea-bordered"
 						placeholder="test@example.com"
 					></textarea>
-					<button class="btn" type="submit">
+					<button id="add-email-btn" class="btn" type="submit">
 						Add Email
+						@components.Spinner()
 					</button>
 				</form>
 			</section>
 			<section class="space-y-4">
 				<h2 class="text-2xl">Current List</h2>
-				<ul class="flex flex-wrap gap-4">
-					for _, item := range emails {
-						<li class="list-none p-4 flex items-center gap-2 bg-base-300 rounded">
-							{ item.Email }
-							<form
-								action="/actions/delete-email"
-								method="POST"
-								class="flex items-center m-0"
-							>
-								<button class="btn btn-xs btn-error">X</button>
-								<input type="hidden" name="id" value={ strconv.FormatInt(item.Id, 10) }/>
-							</form>
-						</li>
-					}
+				<ul id="emailList" class="flex flex-wrap gap-4">
+					@emailList(emails)
 				</ul>
 			</section>
 		</div>
+	}
+}
+
+templ emailList(emails []dataAccess.Email) {
+	for _, item := range emails {
+		<li class="list-none p-4 flex items-center gap-2 bg-base-300 rounded">
+			{ item.Email }
+			<form
+				hx-post="/actions/delete-email"
+				hx-swap="delete"
+				hx-target="closest li"
+				class="flex items-center m-0"
+				hx-disabled-elt={ "#delete-" + strconv.FormatInt(item.Id, 10) }
+			>
+				<button id={ "delete-" + strconv.FormatInt(item.Id, 10) } class="btn btn-xs btn-error">
+					X
+					@components.Spinner()
+				</button>
+				<input type="hidden" name="id" value={ strconv.FormatInt(item.Id, 10) }/>
+			</form>
+		</li>
 	}
 }
