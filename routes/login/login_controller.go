@@ -5,7 +5,7 @@ import (
 	"github.com/webdevcody/go-mailing-list/auth"
 	"github.com/webdevcody/go-mailing-list/utils"
 
-	_ "modernc.org/sqlite"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func RegisterLogin(app *fiber.App) {

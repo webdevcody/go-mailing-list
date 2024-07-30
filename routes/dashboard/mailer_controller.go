@@ -9,7 +9,7 @@ import (
 	"github.com/webdevcody/go-mailing-list/services"
 	"github.com/webdevcody/go-mailing-list/utils"
 
-	_ "modernc.org/sqlite"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func registerMailerPanel(app *fiber.App) {
