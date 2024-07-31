@@ -7,7 +7,7 @@ import (
 	dataAccess "github.com/webdevcody/go-mailing-list/data-access"
 	"github.com/webdevcody/go-mailing-list/utils"
 
-	_ "modernc.org/sqlite"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func RegisterUnsubscribe(app *fiber.App) {

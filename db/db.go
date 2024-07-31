@@ -9,7 +9,7 @@ import (
 var DATABASE_URL = os.Getenv("DATABASE_URL")
 
 func GetDB() *sql.DB {
-	db, err := sql.Open("sqlite", DATABASE_URL)
+	db, err := sql.Open("sqlite3", DATABASE_URL)
 	if err != nil {
 		panic(err)
 	}
