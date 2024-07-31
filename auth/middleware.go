@@ -2,13 +2,16 @@ package auth
 
 import (
 	"crypto/rand"
+	"crypto/subtle"
 	"encoding/hex"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-var sessionStore = make(map[string]bool) // Simulated session store
+const sessionIdLength = 32
+
+var sessionStore = make(map[string]bool)
 
 func AssertAuthenticatedMiddleware(c *fiber.Ctx) error {
 	if !IsAuthenticated(c) {
@@ -52,7 +55,7 @@ func ClearSession(c *fiber.Ctx) {
 }
 
 func generateSessionId() string {
-	bytes := make([]byte, 16)
+	bytes := make([]byte, sessionIdLength)
 	if _, err := rand.Read(bytes); err != nil {
 		panic(err)
 	}
@@ -60,5 +63,6 @@ func generateSessionId() string {
 }
 
 func IsValidPassword(password string) bool {
-	return password == os.Getenv("PASSWORD")
+	expectedPassword := os.Getenv("PASSWORD")
+	return subtle.ConstantTimeCompare([]byte(password), []byte(expectedPassword)) == 1
 }
