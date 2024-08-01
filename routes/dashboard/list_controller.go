@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/go-playground/validator"
 	"github.com/gofiber/fiber/v2"
 	"github.com/webdevcody/go-mailing-list/auth"
 	dataAccess "github.com/webdevcody/go-mailing-list/data-access"
@@ -20,19 +21,38 @@ func registerListPanel(app *fiber.App) {
 
 	app.Post("/actions/add-email", auth.AssertAuthenticatedMiddleware, func(c *fiber.Ctx) error {
 		formEmails := c.FormValue("emails")
+		validate := validator.New()
 
 		emails := strings.Split(formEmails, "\n")
 
+		validEmails := make([]string, 0)
+
+		hadInvalidEmails := false
+
+		// loop over each email and validate it, if it's valid add it another lisce
+		for _, email := range emails {
+			errs := validate.Var(email, "required,email")
+			if errs != nil {
+				hadInvalidEmails = true
+			} else {
+				validEmails = append(validEmails, email)
+			}
+		}
+
 		createdEmails := make([]dataAccess.Email, 0)
 
-		for _, email := range emails {
+		for _, email := range validEmails {
 			newEmail, err := dataAccess.CreateEmail(email)
 			if err == nil {
 				createdEmails = append(createdEmails, newEmail)
 			}
 		}
 
-		return utils.Render(c, emailList(createdEmails))
+		if hadInvalidEmails {
+			return utils.Render(c, withInvalidEmails(emailList(createdEmails)))
+		} else {
+			return utils.Render(c, emailList(createdEmails))
+		}
 	})
 
 	app.Post("/actions/delete-email", auth.AssertAuthenticatedMiddleware, func(c *fiber.Ctx) error {

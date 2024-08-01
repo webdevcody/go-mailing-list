@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-.htmx-indicator{
+.htmx-indicator {
   display: none;
 }
 
@@ -13,4 +13,9 @@
 
 .htmx-request.htmx-indicator{
   display: inline;
+}
+
+.htmx-indicator.force-indicator{
+  display: inline;
+  opacity: 100;
 }

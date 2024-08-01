@@ -1,6 +1,9 @@
 package login
 
 import (
+	"net/http"
+
+	"github.com/a-h/templ"
 	"github.com/gofiber/fiber/v2"
 	"github.com/webdevcody/go-mailing-list/auth"
 	"github.com/webdevcody/go-mailing-list/utils"
@@ -20,11 +23,11 @@ func RegisterLogin(app *fiber.App) {
 		password := c.FormValue("password")
 		isValid := auth.IsValidPassword(password)
 		if !isValid {
-			return c.Redirect("/login")
+			return utils.Render(c, InvalidPasswordError(), templ.WithStatus(http.StatusUnprocessableEntity))
 		}
 		auth.SetSession(c)
 		c.Response().Header.Set("HX-Redirect", "/dashboard/list")
-		return c.SendStatus(fiber.StatusNoContent)
+		return c.SendStatus(http.StatusNoContent)
 	})
 
 }

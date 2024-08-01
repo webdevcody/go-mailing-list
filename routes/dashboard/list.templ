@@ -29,17 +29,28 @@ templ emailListPanel(isLoggedIn bool, emails []dataAccess.Email) {
 						class="textarea textarea-bordered"
 						placeholder="test@example.com"
 					></textarea>
-					<button id="add-email-btn" class="btn" type="submit">
-						Add Email
-						@components.Spinner()
+					<div id="error"></div>
+					<button
+						id="add-email-btn"
+						class="btn"
+						type="submit"
+					>
+						Add Email(s)
+						@components.Indicator()
 					</button>
 				</form>
 			</section>
 			<section class="space-y-4">
 				<h2 class="text-2xl">Current List</h2>
-				<ul id="emailList" class="flex flex-wrap gap-4">
+				<ul
+					id="emailList"
+					class="flex flex-wrap gap-4"
+				>
 					@emailList(emails)
 				</ul>
+				if len(emails) == 0 {
+					<p>You haven't added any emails.</p>
+				}
 			</section>
 		</div>
 	}
@@ -58,10 +69,23 @@ templ emailList(emails []dataAccess.Email) {
 			>
 				<button id={ "delete-" + strconv.FormatInt(item.Id, 10) } class="btn btn-xs btn-error">
 					X
-					@components.Spinner()
+					@components.Indicator()
 				</button>
 				<input type="hidden" name="id" value={ strconv.FormatInt(item.Id, 10) }/>
 			</form>
 		</li>
 	}
+}
+
+templ withInvalidEmails(sibling templ.Component) {
+	<div id="error" hx-swap-oob="true">
+		<div class="alert alert-warning">
+			<div class="flex-1">
+				<span class="font-bold">Invalid Email(s)</span>
+				<p>One or more of the emails you entered were invalid and ignored.  The valid emails were added successfully.</p>
+			</div>
+			<button class="btn" onclick="this.parentElement.remove()">Close</button>
+		</div>
+	</div>
+	@sibling
 }

@@ -16,19 +16,25 @@ templ mailer(isLoggedIn bool) {
 				hx-indicator="find .htmx-indicator"
 				hx-disabled-elt="find button"
 			>
+				<label htmlFor="subject">Subject</label>
 				<input
+					id="subject"
 					class="input input-bordered"
 					name="subject"
 					required
 					placeholder="subject"
 				/>
+				<label htmlFor="html">HTML Format</label>
 				<textarea
+					id="html"
 					class="textarea textarea-bordered"
 					name="html"
 					required
 					placeholder="html format"
 				></textarea>{ " " }
+				<label htmlFor="text">Text Format</label>
 				<textarea
+					id="text"
 					class="textarea textarea-bordered"
 					name="text"
 					required
@@ -36,7 +42,7 @@ templ mailer(isLoggedIn bool) {
 				></textarea>
 				<button class={ "btn" } type="submit">
 					Send Emails
-					@components.Spinner()
+					@components.Indicator()
 				</button>
 			</form>
 		</div>
