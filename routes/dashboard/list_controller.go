@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/a-h/templ"
 	"github.com/go-playground/validator"
 	"github.com/gofiber/fiber/v2"
 	"github.com/webdevcody/go-mailing-list/auth"
@@ -13,10 +14,14 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+func EmailListPage() templ.Component {
+	emails := dataAccess.GetEmails()
+	return emailListPanel(true, emails)
+}
+
 func registerListPanel(app *fiber.App) {
 	app.Get("/dashboard/list", auth.AssertAuthenticatedMiddleware, func(c *fiber.Ctx) error {
-		emails := dataAccess.GetEmails()
-		return utils.Render(c, emailListPanel(auth.IsAuthenticated(c), emails))
+		return utils.Render(c, EmailListPage())
 	})
 
 	app.Post("/actions/add-email", auth.AssertAuthenticatedMiddleware, func(c *fiber.Ctx) error {
@@ -62,7 +67,7 @@ func registerListPanel(app *fiber.App) {
 			panic(err)
 		}
 		dataAccess.DeleteEmail(emailId)
-		return c.Redirect("/dashboard/list")
+		return c.SendStatus(fiber.StatusOK)
 	})
 
 }

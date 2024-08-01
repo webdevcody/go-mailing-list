@@ -5500,36 +5500,36 @@ var htmx = (function () {
       }
     };
 
-    window.addEventListener("pageshow", (event) => {
-      if (event.persisted) {
-        let indicators = document.querySelectorAll("[hx-indicator]");
+    // window.addEventListener("pageshow", (event) => {
+    //   if (event.persisted) {
+    //     let indicators = document.querySelectorAll("[hx-indicator]");
 
-        indicators.forEach((indicator) => {
-          let indicators = /** @type Element[] */ (
-            findAttributeTargets(indicator, "hx-indicator")
-          );
-          if (indicators == null) {
-            indicators = [];
-          }
-          forEach(indicators, function (indicator) {
-            indicator.classList.remove(htmx.config.requestClass);
-          });
-        });
+    //     indicators.forEach((indicator) => {
+    //       let indicators = /** @type Element[] */ (
+    //         findAttributeTargets(indicator, "hx-indicator")
+    //       );
+    //       if (indicators == null) {
+    //         indicators = [];
+    //       }
+    //       forEach(indicators, function (indicator) {
+    //         indicator.classList.remove(htmx.config.requestClass);
+    //       });
+    //     });
 
-        let disabledElts = document.querySelectorAll("[hx-disabled-elt]");
-        disabledElts.forEach((eltTargets) => {
-          let disabledElts = /** @type Element[] */ (
-            findAttributeTargets(eltTargets, "hx-disabled-elt")
-          );
-          if (disabledElts == null) {
-            disabledElts = [];
-          }
-          forEach(disabledElts, function (disabledElement) {
-            disabledElement.removeAttribute("disabled");
-          });
-        });
-      }
-    });
+    //     let disabledElts = document.querySelectorAll("[hx-disabled-elt]");
+    //     disabledElts.forEach((eltTargets) => {
+    //       let disabledElts = /** @type Element[] */ (
+    //         findAttributeTargets(eltTargets, "hx-disabled-elt")
+    //       );
+    //       if (disabledElts == null) {
+    //         disabledElts = [];
+    //       }
+    //       forEach(disabledElts, function (disabledElement) {
+    //         disabledElement.removeAttribute("disabled");
+    //       });
+    //     });
+    //   }
+    // });
 
     getWindow().setTimeout(function () {
       triggerEvent(body, "htmx:load", {}); // give ready handlers a chance to load up before firing this event

@@ -15,6 +15,7 @@ var sessionStore = make(map[string]bool)
 
 func AssertAuthenticatedMiddleware(c *fiber.Ctx) error {
 	if !IsAuthenticated(c) {
+		c.Response().Header.Set("HX-Redirect", "/login")
 		return c.Redirect("/login")
 	}
 	return c.Next()

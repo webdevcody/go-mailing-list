@@ -3,7 +3,7 @@ package components
 templ Layout(isLoggedIn bool) {
 	@HtmlWrapper() {
 		@header(isLoggedIn)
-		<div class="space-y-12 p-12 container mx-auto">
+		<div id="content" class="space-y-12 p-12 container mx-auto">
 			{ children... }
 		</div>
 	}
@@ -20,8 +20,8 @@ templ HtmlWrapper() {
 				rel="stylesheet"
 			/>
 			<link rel="icon" href="/public/favicon.ico" type="image/x-icon"/>
-			// <script defer src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
-			<script defer src="/public/vendor/htmx.2.0.1-fixed.min.js"></script>
+			<script defer src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
+			// <script defer src="/public/vendor/htmx.2.0.1-fixed.js"></script>
 			<script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine-ie11.min.js" integrity="sha512-Atu8sttM7mNNMon28+GHxLdz4Xo2APm1WVHwiLW9gW4bmHpHc/E2IbXrj98SmefTmbqbUTOztKl5PDPiu0LD/A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		</head>
 		<body>

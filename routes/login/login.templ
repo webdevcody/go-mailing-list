@@ -15,9 +15,10 @@ templ LoginForm() {
 	<form
 		id="login-form"
 		hx-disabled-elt="#login-button"
-		hx-post="/actions/login"
+		hx-post={ loginActionUrl }
 		class="flex flex-col gap-4 max-w-2xl"
 		hx-indicator="find .htmx-indicator"
+		hx-target="#content"
 		hx-swap="none"
 	>
 		<label htmlFor="password">Password</label>
