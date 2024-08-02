@@ -1,0 +1,25 @@
+I've added 5 new video sections
+
+Hi Coders,
+
+I'm excited to announce the addition of 5 new videos to my online starter kit walkthrough:
+
+Next.js Project Structure Walkthrough: Dive deep into the project structure, including the data access layer, util files, components, use cases, and app directory.
+
+Layered Architecture: Learn about layered architecture, its benefits, and how it's implemented in the project.
+
+Setting Up Authentication: Get step-by-step instructions on setting up authentication, including OAuth and email/password auth.
+
+Setting Up Stripe: Understand how to integrate Stripe into your project, manage subscription upgrades, handle expired subscriptions, use the Stripe customer portal, and create products.
+
+Cloudflare R2 Setup: See how to set up Cloudflare R2 for image storage and integrate it with your code.
+
+These videos will help you understand not only how to set up some of these necessary third-party services but also how the code base integrates with them. Understanding how a larger code base works is sometimes very hard to do without a helping hand. I'm happy to be there to guide you!
+
+Start Using the Starter Kit Now!
+
+https://wdcstarterkit.com
+
+Have a good day and happy coding!
+
+Web Dev Cody

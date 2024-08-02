@@ -1,6 +1,7 @@
 package dashboard
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -23,8 +24,9 @@ func registerMailerPanel(app *fiber.App) {
 		text := c.FormValue("text")
 
 		emails := dataAccess.GetEmails()
+		totalEmails := len(emails)
 
-		emailChannel := make(chan services.EmailData, len(emails))
+		emailChannel := make(chan services.EmailData, totalEmails)
 
 		go func() {
 			ticker := time.NewTicker(200 * time.Millisecond)
@@ -33,6 +35,8 @@ func registerMailerPanel(app *fiber.App) {
 			for email := range emailChannel {
 				<-ticker.C
 				services.SendEmail(email)
+				totalEmails--
+				fmt.Printf("Remaining emails: %d\n", totalEmails)
 			}
 		}()
 
