@@ -7,11 +7,10 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/webdevcody/go-mailing-list/auth/session"
 )
 
 const sessionIdLength = 32
-
-var sessionStore = make(map[string]bool)
 
 func AssertAuthenticatedMiddleware(c *fiber.Ctx) error {
 	if !IsAuthenticated(c) {
@@ -23,8 +22,8 @@ func AssertAuthenticatedMiddleware(c *fiber.Ctx) error {
 
 func IsAuthenticated(c *fiber.Ctx) bool {
 	userSessionId := GetUserSessionId(c)
-	_, exists := sessionStore[userSessionId]
-	return userSessionId != "" && exists
+	sessionExists := session.IsSessionSet(userSessionId)
+	return sessionExists
 }
 
 func GetUserSessionId(c *fiber.Ctx) string {
@@ -33,7 +32,7 @@ func GetUserSessionId(c *fiber.Ctx) string {
 
 func SetSession(c *fiber.Ctx) {
 	newSessionId := generateSessionId()
-	sessionStore[newSessionId] = true
+	session.SetSession(newSessionId)
 	c.Cookie(&fiber.Cookie{
 		Name:     "session",
 		Value:    newSessionId,
@@ -45,7 +44,7 @@ func SetSession(c *fiber.Ctx) {
 
 func ClearSession(c *fiber.Ctx) {
 	userSessionId := GetUserSessionId(c)
-	delete(sessionStore, userSessionId)
+	session.DeleteSession(userSessionId)
 	c.Cookie(&fiber.Cookie{
 		Name:     "session",
 		Value:    "",
