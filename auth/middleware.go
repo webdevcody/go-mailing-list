@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/webdevcody/go-mailing-list/auth/session"
+	dataAccess "github.com/webdevcody/go-mailing-list/data-access"
 )
 
 const sessionIdLength = 32
@@ -22,17 +22,17 @@ func AssertAuthenticatedMiddleware(c *fiber.Ctx) error {
 
 func IsAuthenticated(c *fiber.Ctx) bool {
 	userSessionId := GetUserSessionId(c)
-	sessionExists := session.IsSessionSet(userSessionId)
-	return sessionExists
+	_, err := dataAccess.GetSession(userSessionId)
+	return err == nil
 }
 
 func GetUserSessionId(c *fiber.Ctx) string {
 	return c.Cookies("session")
 }
 
-func SetSession(c *fiber.Ctx) {
+func SetSession(c *fiber.Ctx) string {
 	newSessionId := generateSessionId()
-	session.SetSession(newSessionId)
+	dataAccess.CreateSession(newSessionId)
 	c.Cookie(&fiber.Cookie{
 		Name:     "session",
 		Value:    newSessionId,
@@ -40,11 +40,11 @@ func SetSession(c *fiber.Ctx) {
 		Secure:   true,
 		SameSite: "Strict",
 	})
+	return newSessionId
 }
 
 func ClearSession(c *fiber.Ctx) {
-	userSessionId := GetUserSessionId(c)
-	session.DeleteSession(userSessionId)
+	dataAccess.DeleteAllSessions()
 	c.Cookie(&fiber.Cookie{
 		Name:     "session",
 		Value:    "",

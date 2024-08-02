@@ -1,4 +1,3 @@
-Here's the modified MJML template: ```mjml
 <mjml>
   <mj-body>
     <mj-section>
@@ -64,4 +63,3 @@ Here's the modified MJML template: ```mjml
     </mj-section>
   </mj-body>
 </mjml>
-```

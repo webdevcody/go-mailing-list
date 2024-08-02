@@ -27,22 +27,37 @@ templ mailer(isLoggedIn bool) {
 					required
 					placeholder="subject"
 				/>
-				<label htmlFor="html">HTML Format</label>
-				<textarea
-					id="html"
-					class="textarea textarea-bordered"
-					name="html"
-					required
-					placeholder="html format"
-				></textarea>{ " " }
-				<label htmlFor="text">Text Format</label>
-				<textarea
-					id="text"
-					class="textarea textarea-bordered"
-					name="text"
-					required
-					placeholder="text format"
-				></textarea>
+				<div class="grid grid-cols-2 gap-8">
+					<div class="flex flex-col gap-2">
+						<label htmlFor="html">HTML Format</label>
+						<textarea
+							id="html"
+							rows="10"
+							class="textarea textarea-bordered"
+							name="html"
+							required
+							placeholder="html format"
+						></textarea>{ " " }
+					</div>
+					<div class="flex flex-col gap-2">
+						<label htmlFor="text">Text Format</label>
+						<textarea
+							rows="10"
+							id="text"
+							class="textarea textarea-bordered"
+							name="text"
+							required
+							placeholder="text format"
+						></textarea>
+					</div>
+				</div>
+				<label htmlFor="text">Test Email (optional)</label>
+				<input
+					id="tester"
+					class="input input-bordered"
+					name="tester"
+					placeholder="tester email"
+				/>
 				<button class={ "btn" } type="submit">
 					Send Emails
 					@components.Indicator()

@@ -23,8 +23,14 @@ const charSet = "UTF-8"
 
 var sender = os.Getenv("SENDER_EMAIL")
 var hostname = os.Getenv("HOST_NAME")
+var isLocal = os.Getenv("IS_LOCAL") == "true"
 
 func SendEmail(emailData EmailData) {
+
+	if isLocal {
+		fmt.Printf("Mock email sent to: %s\n", emailData.Email)
+		return
+	}
 
 	unsubscribeLinkHtml := fmt.Sprintf("<div style=\"text-align: center;\">Seibert Software Solutions, LLC<br/>PO Box 913<br/>Harrison TN, 37341<br /><br /> <a href=\"%s/unsubscribe/%s\" target=\"_blank;\">Unsubscribe</a></div>",
 		hostname,

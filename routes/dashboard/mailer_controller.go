@@ -22,8 +22,17 @@ func registerMailerPanel(app *fiber.App) {
 		subject := c.FormValue("subject")
 		html := c.FormValue("html")
 		text := c.FormValue("text")
+		tester := c.FormValue("tester")
 
-		emails := dataAccess.GetEmails()
+		emails := make([]dataAccess.Email, 0)
+
+		if tester != "" {
+			emails = append(emails, dataAccess.Email{
+				Email: tester,
+			})
+		} else {
+			emails = dataAccess.GetEmails()
+		}
 		totalEmails := len(emails)
 
 		emailChannel := make(chan services.EmailData, totalEmails)
