@@ -17,6 +17,9 @@ RUN wget https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz && \
 	ln -s /usr/local/zig/zig /usr/local/bin/zig && \
 	zig version
 
+RUN apt-get install -y --no-install-recommends ca-certificates
+
+
 RUN go install github.com/a-h/templ/cmd/templ@latest
 
 COPY go.mod go.sum package-lock.json package.json ./
@@ -28,6 +31,7 @@ RUN make -f tiny-bundle.mk build
 
 FROM scratch
 WORKDIR /app
+COPY --from=builderStep /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /app/bin .
 COPY --from=builder /app/public ./public
 EXPOSE 3000
