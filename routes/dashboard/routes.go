@@ -3,6 +3,7 @@ package dashboard
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/webdevcody/go-mailing-list/auth"
+	"github.com/webdevcody/go-mailing-list/routes/dashboard/bounced"
 )
 
 func RegisterDashboard(app *fiber.App) {
@@ -11,4 +12,5 @@ func RegisterDashboard(app *fiber.App) {
 	})
 	registerListPanel(app)
 	registerMailerPanel(app)
+	bounced.RegisterBouncedPanel(app)
 }

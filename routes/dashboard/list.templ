@@ -3,13 +3,14 @@ package dashboard
 import (
 	"github.com/webdevcody/go-mailing-list/components"
 	dataAccess "github.com/webdevcody/go-mailing-list/data-access"
+	"github.com/webdevcody/go-mailing-list/routes/dashboard/tabs"
 	"strconv"
 )
 
 templ emailListPanel(isLoggedIn bool, emails []dataAccess.Email) {
 	@components.Layout(isLoggedIn) {
 		<div class="space-y-12">
-			@tabs(listTab)
+			@tabs.Tabs(tabs.ListTab)
 			<section class="space-y-4">
 				<h1 class="text-2xl">Mailing List</h1>
 				<form

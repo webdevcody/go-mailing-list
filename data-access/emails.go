@@ -26,6 +26,19 @@ func CreateEmail(email string) (Email, error) {
 	return createdEmail, nil
 }
 
+func DeleteEmailByEmail(email string) error {
+	db := db.GetDB()
+	stmt, err := db.Prepare("DELETE FROM emails WHERE email = ?")
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(email)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func DeleteEmail(id int64) {
 	db := db.GetDB()
 	stmt, err := db.Prepare("DELETE FROM emails WHERE id = ?")
