@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/webdevcody/go-mailing-list/migrations"
 	"github.com/webdevcody/go-mailing-list/routes"
 )
@@ -15,6 +16,8 @@ func main() {
 	app := fiber.New(fiber.Config{
 		Network: fiber.NetworkTCP,
 	})
+
+	app.Use(logger.New())
 
 	app.Static("/public", "./public")
 
