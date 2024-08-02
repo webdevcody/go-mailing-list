@@ -2,7 +2,6 @@ package login
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"sync"
 	"time"
@@ -32,7 +31,6 @@ func assertUnderRateLimit() error {
 	if now > resetAt {
 		resetAt = now + 1
 		loginAttempts = 0
-		fmt.Println("resetting login attempts")
 	}
 
 	if loginAttempts > maxLoginAttempts {
