@@ -31,7 +31,7 @@ RUN make -f tiny-bundle.mk build
 
 FROM scratch
 WORKDIR /app
-COPY --from=builderStep /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /app/bin .
 COPY --from=builder /app/public ./public
 EXPOSE 3000
