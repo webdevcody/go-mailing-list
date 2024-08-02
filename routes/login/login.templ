@@ -18,13 +18,14 @@ templ LoginForm() {
 		hx-post={ loginActionUrl }
 		class="flex flex-col gap-4 max-w-2xl"
 		hx-indicator="find .htmx-indicator"
+		hx-on::before-request="document.getElementById('error').innerHTML = ''"
 		hx-target="#content"
 		hx-swap="none"
 	>
 		<label htmlFor="password">Password</label>
 		<input
 			id="password"
-			focus
+			autofocus
 			class="input input-bordered w-full max-w-xs"
 			type="password"
 			name="password"

@@ -1,7 +1,11 @@
 package login
 
 import (
+	"errors"
+	"fmt"
 	"net/http"
+	"sync"
+	"time"
 
 	"github.com/a-h/templ"
 	"github.com/gofiber/fiber/v2"
@@ -12,17 +16,42 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var loginActionUrl = "/actions/login"
+var (
+	maxLoginAttempts = 5
+	loginAttempts    = 0
+	mu               sync.Mutex
+	resetAt          int64 = 0
+	loginActionUrl         = "/actions/login"
+)
+
+func assertUnderRateLimit() error {
+	mu.Lock()
+	defer mu.Unlock()
+
+	now := time.Now().Unix()
+	if now > resetAt {
+		resetAt = now + 1
+		loginAttempts = 0
+		fmt.Println("resetting login attempts")
+	}
+
+	if loginAttempts > maxLoginAttempts {
+		return errors.New("too many login attempts")
+	}
+
+	loginAttempts++
+	return nil
+}
 
 func RegisterLogin(app *fiber.App) {
 	app.Get("/login", func(c *fiber.Ctx) error {
-		if auth.IsAuthenticated(c) {
-			return c.Redirect("/dashboard")
-		}
 		return utils.Render(c, login(auth.IsAuthenticated(c)))
 	})
 
 	app.Post(loginActionUrl, func(c *fiber.Ctx) error {
+		if err := assertUnderRateLimit(); err != nil {
+			return c.SendStatus(fiber.StatusTooManyRequests)
+		}
 		password := c.FormValue("password")
 		isValid := auth.IsValidPassword(password)
 		if !isValid {
@@ -34,8 +63,6 @@ func RegisterLogin(app *fiber.App) {
 		c.Response().Header.Set("HX-Reselect", "#content")
 		c.Response().Header.Set("HX-Reswap", "outerHTML")
 		return utils.Render(c, dashboard.EmailListPage())
-		// c.Response().Header.Set("HX-Redirect", "/dashboard/list")
-		// return c.SendStatus(http.StatusOK)
 	})
 
 }

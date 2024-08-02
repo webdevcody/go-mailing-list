@@ -43,3 +43,5 @@ build:
 dev:
 	@make -j4 templ server tailwind sync_assets
 	
+loadtest:
+	@k6 run test/loadtest.js
