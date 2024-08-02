@@ -8,7 +8,19 @@ templ header(isLoggedIn bool) {
 				<div class="flex items-center">
 					<a href="/dashboard" class="navbar-brand mr-2">Mailing List</a>
 					if isLoggedIn {
-						<a href="/dashboard" class="btn btn-link">Dashboard</a>
+						<a
+							href="/dashboard/list"
+							class="btn btn-link"
+						>List</a>
+						<a
+							href="/dashboard/mailer"
+							class="btn btn-link"
+						>Mailer</a>
+						<a
+							target="_blank"
+							href="https://mjml.io/try-it-live"
+							class="btn btn-link"
+						>MJML</a>
 					}
 				</div>
 				if isLoggedIn {

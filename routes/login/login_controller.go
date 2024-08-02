@@ -9,7 +9,6 @@ import (
 	"github.com/a-h/templ"
 	"github.com/gofiber/fiber/v2"
 	"github.com/webdevcody/go-mailing-list/auth"
-	"github.com/webdevcody/go-mailing-list/routes/dashboard"
 	"github.com/webdevcody/go-mailing-list/utils"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -56,11 +55,8 @@ func RegisterLogin(app *fiber.App) {
 			return utils.Render(c, InvalidPasswordError(), templ.WithStatus(http.StatusUnprocessableEntity))
 		}
 		auth.SetSession(c)
-		c.Response().Header.Set("HX-Push-Url", "/dashboard/list")
-		c.Response().Header.Set("HX-Retarget", "#content")
-		c.Response().Header.Set("HX-Reselect", "#content")
-		c.Response().Header.Set("HX-Reswap", "outerHTML")
-		return utils.Render(c, dashboard.EmailListPage())
+		c.Response().Header.Set("HX-Redirect", "/dashboard/list")
+		return c.SendStatus(fiber.StatusOK)
 	})
 
 }

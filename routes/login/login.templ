@@ -6,7 +6,17 @@ templ login(isLoggedIn bool) {
 	@components.Layout(isLoggedIn) {
 		<div class="flex flex-col gap-8 items-center">
 			<h1 class="text-4xl">Mailing List Login</h1>
-			@LoginForm()
+			if isLoggedIn {
+				<p>You're already logged in!</p>
+				<a
+					href="/dashboard/list"
+					class="max-w-sm btn btn-primary btn-block btn-large flex gap-3"
+				>
+					View Dashboard
+				</a>
+			} else {
+				@LoginForm()
+			}
 		</div>
 	}
 }
@@ -18,9 +28,8 @@ templ LoginForm() {
 		hx-post={ loginActionUrl }
 		class="flex flex-col gap-4 max-w-2xl"
 		hx-indicator="find .htmx-indicator"
-		hx-on::before-request="document.getElementById('error').innerHTML = ''"
-		hx-target="#content"
 		hx-swap="none"
+		hx-on::before-request="document.getElementById('error').innerHTML = ''"
 	>
 		<label htmlFor="password">Password</label>
 		<input
