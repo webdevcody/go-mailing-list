@@ -2,13 +2,12 @@ package bounced
 
 import (
 	"github.com/webdevcody/go-mailing-list/components"
-	"github.com/webdevcody/go-mailing-list/routes/dashboard/tabs"
+	dashboardComponents "github.com/webdevcody/go-mailing-list/routes/dashboard/dashboard_components"
 )
 
 templ BouncedPanel(isLoggedIn bool) {
-	@components.Layout(isLoggedIn) {
+	@dashboardComponents.Layout(isLoggedIn, dashboardComponents.BouncedPanel) {
 		<div class="space-y-12">
-			@tabs.Tabs(tabs.BouncedTab)
 			<section class="space-y-4">
 				<h1 class="text-2xl">Bounced List</h1>
 				<form
@@ -30,7 +29,7 @@ templ BouncedPanel(isLoggedIn bool) {
 					></textarea>
 					<button
 						id="add-email-btn"
-						class="btn"
+						class="btn btn-secondary"
 						type="submit"
 					>
 						Delete Email(s)

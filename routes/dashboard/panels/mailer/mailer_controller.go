@@ -1,4 +1,4 @@
-package dashboard
+package mailer
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func registerMailerPanel(app *fiber.App) {
+func RegisterMailerPanel(app *fiber.App) {
 	app.Get("/dashboard/mailer", auth.AssertAuthenticatedMiddleware, func(c *fiber.Ctx) error {
 		return utils.Render(c, mailer(auth.IsAuthenticated(c)))
 	})

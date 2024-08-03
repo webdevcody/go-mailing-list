@@ -1,0 +1,51 @@
+package compose
+
+import (
+	"github.com/webdevcody/go-mailing-list/components"
+	dashboardComponents "github.com/webdevcody/go-mailing-list/routes/dashboard/dashboard_components"
+)
+
+templ composePanel(isLoggedIn bool) {
+	@dashboardComponents.Layout(isLoggedIn, dashboardComponents.ComposePanel) {
+		<div class="space-y-8">
+			<h2 class={ "text-2xl" }>Compose Emails</h2>
+			<form
+				method="POST"
+				class="flex flex-col gap-4"
+				hx-post="/actions/convert-mjml"
+				hx-swap="innerHTML"
+				hx-target="#preview"
+				hx-indicator="find .htmx-indicator"
+				hx-disabled-elt="find button"
+			>
+				<div class="grid grid-cols-2 gap-8">
+					<div class="flex flex-col gap-2">
+						<label htmlFor="html">MJML Template</label>
+						<textarea
+							id="mjml"
+							rows="10"
+							class="textarea textarea-bordered"
+							name="mjml"
+							required
+							placeholder="MJML Template"
+						></textarea>{ " " }
+					</div>
+					<div class="flex flex-col gap-2">
+						<label htmlFor="html">HTML Preview</label>
+						<div id="preview"></div>
+					</div>
+				</div>
+				<button class="btn btn-primary" type="submit">
+					Convert
+					@components.Indicator()
+				</button>
+			</form>
+		</div>
+	}
+}
+
+templ preview(content string) {
+	<div>
+		{ content }
+	</div>
+}

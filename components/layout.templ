@@ -3,14 +3,14 @@ package components
 templ Layout(isLoggedIn bool) {
 	@HtmlWrapper() {
 		@header(isLoggedIn)
-		<div id="content" class="space-y-12 p-12 container mx-auto">
+		<div class="space-y-12 p-12 container mx-auto">
 			{ children... }
 		</div>
 	}
 }
 
 templ HtmlWrapper() {
-	<html data-theme="forest">
+	<html data-theme="sunset">
 		<head>
 			<title>Mailing List</title>
 			<meta charset="UTF-8"/>

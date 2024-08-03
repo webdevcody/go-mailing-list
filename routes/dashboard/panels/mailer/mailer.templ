@@ -1,14 +1,13 @@
-package dashboard
+package mailer
 
 import (
 	"github.com/webdevcody/go-mailing-list/components"
-	"github.com/webdevcody/go-mailing-list/routes/dashboard/tabs"
+	dashboardComponents "github.com/webdevcody/go-mailing-list/routes/dashboard/dashboard_components"
 )
 
 templ mailer(isLoggedIn bool) {
-	@components.Layout(isLoggedIn) {
+	@dashboardComponents.Layout(isLoggedIn, dashboardComponents.MailerPanel) {
 		<div class="space-y-8">
-			@tabs.Tabs(tabs.MailerTab)
 			<h2 class={ "text-2xl" }>Send Emails</h2>
 			<form
 				method="POST"
@@ -58,7 +57,7 @@ templ mailer(isLoggedIn bool) {
 					name="tester"
 					placeholder="tester email"
 				/>
-				<button class={ "btn" } type="submit">
+				<button class="btn btn-primary" type="submit">
 					Send Emails
 					@components.Indicator()
 				</button>

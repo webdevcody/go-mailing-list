@@ -6,22 +6,10 @@ templ header(isLoggedIn bool) {
 		<div class="container mx-auto">
 			<div class="flex justify-between w-full">
 				<div class="flex items-center">
-					<a href="/dashboard" class="navbar-brand mr-2">Mailing List</a>
-					if isLoggedIn {
-						<a
-							href="/dashboard/list"
-							class="btn btn-link"
-						>List</a>
-						<a
-							href="/dashboard/mailer"
-							class="btn btn-link"
-						>Mailer</a>
-						<a
-							target="_blank"
-							href="https://mjml.io/try-it-live"
-							class="btn btn-link"
-						>MJML</a>
-					}
+					<a href="/dashboard" class="navbar-brand text-xl mr-2 flex gap-2 items-center">
+						<img src="/public/logo.png" class="size-8"/>
+						Mailing List
+					</a>
 				</div>
 				if isLoggedIn {
 					<a href="/logout" class="btn btn-link">Logout</a>

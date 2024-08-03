@@ -1,4 +1,4 @@
-package dashboard
+package list
 
 import (
 	"strconv"
@@ -19,7 +19,7 @@ func EmailListPage() templ.Component {
 	return emailListPanel(true, emails)
 }
 
-func registerListPanel(app *fiber.App) {
+func RegisterListPanel(app *fiber.App) {
 	app.Get("/dashboard/list", auth.AssertAuthenticatedMiddleware, func(c *fiber.Ctx) error {
 		return utils.Render(c, EmailListPage())
 	})
