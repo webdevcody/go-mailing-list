@@ -149,7 +149,7 @@ func RegisterComposePanel(app *fiber.App) {
 		subject := c.FormValue("subject")
 		html := c.FormValue("html")
 		text := c.FormValue("text")
-		tester := c.Get("Hx-Prompt")
+		tester := string(c.Request().Header.Peek("Hx-Prompt"))
 
 		if tester == "" {
 			return c.SendStatus(fiber.StatusBadRequest)
