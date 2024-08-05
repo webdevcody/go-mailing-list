@@ -12,7 +12,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/webdevcody/go-mailing-list/auth"
 	dataAccess "github.com/webdevcody/go-mailing-list/data-access"
-	"github.com/webdevcody/go-mailing-list/routes/dashboard/panels/mailer"
+	"github.com/webdevcody/go-mailing-list/services"
 	"github.com/webdevcody/go-mailing-list/utils"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -139,7 +139,7 @@ func RegisterComposePanel(app *fiber.App) {
 		html := c.FormValue("html")
 		text := c.FormValue("text")
 
-		mailer.SendEmails(subject, html, text, "")
+		services.SendEmails(subject, html, text, "")
 
 		c.Response().Header.Set("HX-Redirect", "/dashboard/compose")
 		return c.SendStatus(fiber.StatusOK)
@@ -155,7 +155,7 @@ func RegisterComposePanel(app *fiber.App) {
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
-		mailer.SendEmails(subject, html, text, tester)
+		services.SendEmails(subject, html, text, tester)
 
 		c.Response().Header.Set("HX-Redirect", "/dashboard/compose")
 		return c.SendStatus(fiber.StatusOK)

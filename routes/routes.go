@@ -23,6 +23,16 @@ func RegisterRoutes(app *fiber.App) {
 		return c.SendStatus(fiber.StatusOK)
 	})
 
+	app.Post("/api/subscribe", auth.ApiAuthMiddleware, func(c *fiber.Ctx) error {
+		email := c.FormValue("email")
+		fmt.Printf("User subscribed: %s\n", email)
+		_, err := dataAccess.CreateEmail(email)
+		if err != nil {
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
+		return c.SendStatus(fiber.StatusOK)
+	})
+
 	dashboard.RegisterDashboard(app)
 	login.RegisterLogin(app)
 	logout.RegisterLogout(app)

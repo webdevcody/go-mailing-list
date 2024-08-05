@@ -7,7 +7,7 @@ export const handler = async (event) => {
     const email = message.bounce.bouncedRecipients[0].emailAddress;
     const params = new URLSearchParams();
     params.append("email", email);
-    await fetch(`https://newsletter.wdcstarterkit.com/api/bounced`, {
+    await fetch(process.env.BOUNCED_ENDPOINT, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,

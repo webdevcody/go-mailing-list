@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ses"
+	dataAccess "github.com/webdevcody/go-mailing-list/data-access"
 )
 
 type EmailData struct {
@@ -24,6 +26,48 @@ const charSet = "UTF-8"
 var sender = os.Getenv("SENDER_EMAIL")
 var hostname = os.Getenv("HOST_NAME")
 var isLocal = os.Getenv("IS_LOCAL") == "true"
+
+func SendEmails(subject string, html string, text string, tester string) {
+	fmt.Println(subject, html, text, tester)
+
+	emails := make([]dataAccess.Email, 0)
+
+	if tester != "" {
+		emails = append(emails, dataAccess.Email{
+			Email: tester,
+		})
+	} else {
+		emails = dataAccess.GetEmails()
+	}
+	totalEmails := len(emails)
+
+	emailChannel := make(chan EmailData, totalEmails)
+
+	go func() {
+		ticker := time.NewTicker(200 * time.Millisecond)
+		defer ticker.Stop()
+
+		for email := range emailChannel {
+			<-ticker.C
+			SendEmail(email)
+			totalEmails--
+			fmt.Printf("Remaining emails: %d\n", totalEmails)
+		}
+	}()
+
+	go func() {
+		for _, email := range emails {
+			emailChannel <- EmailData{
+				Email:         email.Email,
+				HtmlBody:      html,
+				Subject:       subject,
+				UnsubscribeId: email.Id,
+				TextBody:      text,
+			}
+		}
+		close(emailChannel)
+	}()
+}
 
 func SendEmail(emailData EmailData) {
 
