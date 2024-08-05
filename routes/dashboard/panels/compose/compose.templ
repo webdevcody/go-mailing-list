@@ -21,7 +21,7 @@ templ composePanel(isLoggedIn bool, template dataAccess.Template) {
 						hx-prompt="Enter an email to send a test to?"
 						hx-indicator="find .htmx-indicator"
 						hx-disabled-elt="this"
-						hx-include="#subject, #html-input, #text"
+						hx-include="#subject, #html, #text"
 					>
 						Send Test Email
 						@components.Indicator()
@@ -34,7 +34,7 @@ templ composePanel(isLoggedIn bool, template dataAccess.Template) {
 						hx-confirm="Are you sure you want to email everyone on your mailing list?"
 						hx-indicator="find .htmx-indicator"
 						hx-disabled-elt="this"
-						hx-include="#subject, #html-input, #text"
+						hx-include="#subject, #html, #text"
 					>
 						Send to Subscribers
 						@components.Indicator()
