@@ -1,42 +1,130 @@
 package compose
 
 import (
+	"fmt"
 	"github.com/webdevcody/go-mailing-list/components"
+	dataAccess "github.com/webdevcody/go-mailing-list/data-access"
 	dashboardComponents "github.com/webdevcody/go-mailing-list/routes/dashboard/dashboard_components"
 )
 
-templ composePanel(isLoggedIn bool) {
+templ composePanel(isLoggedIn bool, template dataAccess.Template) {
 	@dashboardComponents.Layout(isLoggedIn, dashboardComponents.ComposePanel) {
 		<div class="space-y-8">
-			<h2 class={ "text-2xl" }>Compose Emails</h2>
+			<div class="flex justify-between items-center">
+				<h2 class={ "text-2xl" }>Compose Emails</h2>
+				<div class="flex gap-2">
+					<button
+						class="btn btn-secondary"
+						hx-post={ sendTestEmailUrl }
+						hx-swap="none"
+						hx-trigger="click"
+						hx-prompt="Enter an email to send a test to?"
+						hx-indicator="find .htmx-indicator"
+						hx-disabled-elt="this"
+						hx-include="#subject, #html-input, #text"
+					>
+						Send Test Email
+						@components.Indicator()
+					</button>
+					<button
+						class="btn btn-primary"
+						hx-post={ sendEmailsUrl }
+						hx-swap="none"
+						hx-trigger="click"
+						hx-confirm="Are you sure you want to email everyone on your mailing list?"
+						hx-indicator="find .htmx-indicator"
+						hx-disabled-elt="this"
+						hx-include="#subject, #html-input, #text"
+					>
+						Send to Subscribers
+						@components.Indicator()
+					</button>
+					<button
+						class="btn btn-error"
+						hx-delete={ deleteTemplateUrl }
+						hx-swap="none"
+						hx-confirm="Are you sure you want to delete this template?"
+						hx-indicator="find .htmx-indicator"
+						hx-disabled-elt="this"
+						hx-include="#templateId"
+					>
+						Delete
+						@components.Indicator()
+					</button>
+				</div>
+			</div>
+			<input class="hidden" id="templateId" type="hidden" name="templateId" value={ fmt.Sprintf("%d", template.Id) }/>
 			<form
-				method="POST"
-				class="flex flex-col gap-4"
-				hx-post="/actions/convert-mjml"
-				hx-swap="innerHTML"
-				hx-target="#preview"
-				hx-indicator="find .htmx-indicator"
-				hx-disabled-elt="find button"
+				class="space-y-6"
 			>
-				<div class="grid grid-cols-2 gap-8">
-					<div class="flex flex-col gap-2">
-						<label htmlFor="html">MJML Template</label>
+				<input
+					id="templateId"
+					type="hidden"
+					name="templateId"
+					value={ fmt.Sprintf("%d", template.Id) }
+					placeholder="templateId"
+				/>
+				<input
+					id="html"
+					type="hidden"
+					name="html"
+					value={ template.Html }
+				/>
+				<div class="flex flex-col gap-2">
+					<label htmlFor="subject">Subject</label>
+					<input
+						id="subject"
+						class="input input-bordered"
+						name="subject"
+						required
+						value={ template.Subject }
+						placeholder="subject"
+					/>
+				</div>
+				<div class="grid grid-cols-2 gap-8 h-80">
+					<div class="flex flex-col gap-2 ">
+						<label htmlFor="html">MJML Template!</label>
 						<textarea
 							id="mjml"
 							rows="10"
 							class="textarea textarea-bordered"
 							name="mjml"
+							hx-post={ convertUrl }
+							hx-swap="innerHTML"
+							hx-target="#preview"
 							required
+							hx-trigger="keyup changed delay:500ms"
 							placeholder="MJML Template"
-						></textarea>{ " " }
+						>{ template.Mjml }</textarea>
 					</div>
 					<div class="flex flex-col gap-2">
 						<label htmlFor="html">HTML Preview</label>
-						<div id="preview"></div>
+						<div
+							id="preview"
+							hx-trigger="load"
+							hx-target="this"
+							hx-swap="innerHTML"
+							hx-post={ convertUrl }
+							class="overflow-y-scroll h-64"
+						></div>
 					</div>
 				</div>
-				<button class="btn btn-primary" type="submit">
-					Convert
+				<input
+					id="text"
+					name="text"
+					type="hidden"
+					value={ template.Text }
+				/>
+				<button
+					hx-trigger="click"
+					hx-post={ saveTemplateUrl }
+					hx-swap="none"
+					hx-indicator="find .htmx-indicator"
+					hx-disabled-elt="this"
+					class="btn btn-secondary w-full"
+					type="button"
+				>
+					Save
 					@components.Indicator()
 				</button>
 			</form>
@@ -44,8 +132,8 @@ templ composePanel(isLoggedIn bool) {
 	}
 }
 
-templ preview(content string) {
-	<div>
-		{ content }
-	</div>
+templ convertResponse(html string, text string) {
+	<input id="text" name="text" type="hidden" hx-swap-oob="true" value={ text }/>
+	<input id="html" name="html" type="hidden" hx-swap-oob="true" value={ html }/>
+	@templ.Raw(html)
 }

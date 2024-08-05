@@ -5,6 +5,7 @@ import (
 	"crypto/subtle"
 	"encoding/hex"
 	"os"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	dataAccess "github.com/webdevcody/go-mailing-list/data-access"
@@ -21,6 +22,15 @@ func AssertAuthenticatedMiddleware(c *fiber.Ctx) error {
 }
 
 func IsAuthenticated(c *fiber.Ctx) bool {
+	authHeader := c.Get("Authorization")
+	if authHeader != "" {
+		token := strings.TrimPrefix(authHeader, "Bearer ")
+		if IsValidPassword(token) {
+			return true
+		}
+	}
+
+	// Check if session is valid
 	userSessionId := GetUserSessionId(c)
 	_, err := dataAccess.GetSession(userSessionId)
 	return err == nil

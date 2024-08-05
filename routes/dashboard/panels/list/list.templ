@@ -59,7 +59,7 @@ templ emailListPanel(isLoggedIn bool, emails []dataAccess.Email) {
 
 templ emailList(emails []dataAccess.Email) {
 	for _, item := range emails {
-		<li class="list-none p-4 flex items-center gap-2 bg-base-300 rounded">
+		<li class="list-none p-4 flex items-center gap-2 bg-base-200 rounded">
 			{ item.Email }
 			<form
 				hx-post="/actions/delete-email"

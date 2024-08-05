@@ -18,6 +18,12 @@ func RunMigrations() {
 	}
 	stmt.Exec()
 
+	stmt, err = db.Prepare("CREATE TABLE IF NOT EXISTS templates (id INTEGER PRIMARY KEY, mjml TEXT, html TEXT, text TEXT, subject TEXT)")
+	if err != nil {
+		panic(err)
+	}
+	stmt.Exec()
+
 	// add a unique constraint to the email column if it does not exists
 	stmt, err = db.Prepare("CREATE UNIQUE INDEX IF NOT EXISTS email_unique ON emails (email)")
 	if err != nil {

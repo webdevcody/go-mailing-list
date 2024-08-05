@@ -21,6 +21,14 @@ func main() {
 
 	app.Static("/public", "./public")
 
+	app.Use(func(c *fiber.Ctx) error {
+		c.Set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate")
+		c.Set("Pragma", "no-cache")
+		c.Set("Expires", "0")
+		c.Set("Surrogate-Control", "no-store")
+		return c.Next()
+	})
+
 	routes.RegisterRoutes(app)
 
 	addr := os.Getenv("HTTP_LISTEN_ADDR")

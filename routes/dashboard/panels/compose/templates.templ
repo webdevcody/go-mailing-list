@@ -1,0 +1,45 @@
+package compose
+
+import (
+	"fmt"
+	"github.com/webdevcody/go-mailing-list/components"
+	dataAccess "github.com/webdevcody/go-mailing-list/data-access"
+	dashboardComponents "github.com/webdevcody/go-mailing-list/routes/dashboard/dashboard_components"
+)
+
+templ templatesPage(isLoggedIn bool, templates []dataAccess.Template) {
+	@dashboardComponents.Layout(isLoggedIn, dashboardComponents.ComposePanel) {
+		<div class="space-y-8">
+			<div class="flex justify-between items-center">
+				<h2 class={ "text-2xl" }>Your Templates</h2>
+				<button
+					class="btn btn-primary"
+					hx-post={ createTemplateUrl }
+					hx-swap="none"
+					hx-indicator="find .htmx-indicator"
+					hx-disabled-elt="this"
+				>
+					Create Template
+					@components.Indicator()
+				</button>
+			</div>
+			<div class="grid grid-cols-3 gap-4">
+				for _, template := range templates {
+					@templateCard(template)
+				}
+			</div>
+		</div>
+	}
+}
+
+templ templateCard(template dataAccess.Template) {
+	<div class="card bg-base-200 shadow-xl">
+		<div class="card-body">
+			<h2 class="card-title">{ template.Subject }</h2>
+			<p>{ template.Text[:min(200, len(template.Text))] }</p>
+			<div class="card-actions justify-end">
+				<a href={ templ.URL(fmt.Sprintf("/dashboard/compose/%d", template.Id)) } class="btn btn-primary">Edit</a>
+			</div>
+		</div>
+	</div>
+}

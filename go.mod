@@ -3,6 +3,7 @@ module github.com/webdevcody/go-mailing-list
 go 1.22.5
 
 require (
+	github.com/Boostport/mjml-go v0.14.6
 	github.com/a-h/templ v0.2.747
 	github.com/aws/aws-sdk-go v1.55.3
 	github.com/go-playground/validator v9.31.0+incompatible
@@ -13,12 +14,12 @@ require (
 )
 
 require (
-	github.com/Boostport/mjml-go v0.14.6 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
+	github.com/k3a/html2text v1.2.1 // indirect
 	github.com/klauspost/compress v1.17.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
