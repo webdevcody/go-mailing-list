@@ -13,9 +13,16 @@ import (
 
 const sessionIdLength = 32
 
+func ApiAuthMiddleware(c *fiber.Ctx) error {
+	if !IsAuthenticated(c) {
+		return c.SendStatus(fiber.StatusUnauthorized)
+	}
+	return c.Next()
+}
+
 func AssertAuthenticatedMiddleware(c *fiber.Ctx) error {
 	if !IsAuthenticated(c) {
-		c.Response().Header.Set("HX-Redirect", "/login")
+		c.Set("HX-Redirect", "/login")
 		return c.Redirect("/login")
 	}
 	return c.Next()
@@ -25,12 +32,9 @@ func IsAuthenticated(c *fiber.Ctx) bool {
 	authHeader := c.Get("Authorization")
 	if authHeader != "" {
 		token := strings.TrimPrefix(authHeader, "Bearer ")
-		if IsValidPassword(token) {
-			return true
-		}
+		return IsValidPassword(token)
 	}
 
-	// Check if session is valid
 	userSessionId := GetUserSessionId(c)
 	_, err := dataAccess.GetSession(userSessionId)
 	return err == nil

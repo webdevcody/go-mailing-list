@@ -13,10 +13,13 @@ import (
 )
 
 func RegisterRoutes(app *fiber.App) {
-	app.Post("/api/bounced", auth.AssertAuthenticatedMiddleware, func(c *fiber.Ctx) error {
+	app.Post("/api/bounced", auth.ApiAuthMiddleware, func(c *fiber.Ctx) error {
 		email := c.FormValue("email")
 		fmt.Printf("Marking email as bounced: %s\n", email)
-		dataAccess.DeleteEmailByEmail(email)
+		err := dataAccess.DeleteEmailByEmail(email)
+		if err != nil {
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
 		return c.SendStatus(fiber.StatusOK)
 	})
 

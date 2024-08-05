@@ -72,9 +72,6 @@ func RegisterComposePanel(app *fiber.App) {
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
-		// print new template id
-		fmt.Println(newTemplate.Id)
-
 		c.Response().Header.Set("HX-Redirect", "/dashboard/compose/"+strconv.FormatInt(newTemplate.Id, 10))
 		return c.SendStatus(fiber.StatusCreated)
 	})
@@ -152,7 +149,7 @@ func RegisterComposePanel(app *fiber.App) {
 		subject := c.FormValue("subject")
 		html := c.FormValue("html")
 		text := c.FormValue("text")
-		tester := string(c.Request().Header.Peek("Hx-Prompt"))
+		tester := c.Get("Hx-Prompt")
 
 		if tester == "" {
 			return c.SendStatus(fiber.StatusBadRequest)
