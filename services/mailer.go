@@ -3,7 +3,6 @@ package services
 import (
 	"fmt"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -18,7 +17,7 @@ type EmailData struct {
 	HtmlBody      string
 	Subject       string
 	TextBody      string
-	UnsubscribeId int64
+	UnsubscribeId string
 }
 
 const charSet = "UTF-8"
@@ -61,7 +60,7 @@ func SendEmails(subject string, html string, text string, tester string) {
 				Email:         email.Email,
 				HtmlBody:      html,
 				Subject:       subject,
-				UnsubscribeId: email.Id,
+				UnsubscribeId: email.UnsubscribeId,
 				TextBody:      text,
 			}
 		}
@@ -78,9 +77,9 @@ func SendEmail(emailData EmailData) {
 
 	unsubscribeLinkHtml := fmt.Sprintf("<div style=\"text-align: center;\">Seibert Software Solutions, LLC<br/>PO Box 913<br/>Harrison TN, 37341<br /><br /> <a href=\"%s/unsubscribe/%s\" target=\"_blank;\">Unsubscribe</a></div>",
 		hostname,
-		strconv.FormatInt(emailData.UnsubscribeId, 10),
+		emailData.UnsubscribeId,
 	)
-	unsubscribeLinkText := fmt.Sprintf("Seibert Software Solutions, LLC @ PO Box 913, Harrison TN, 37341, You can unsubscribe here: %s/unsubscribe/%s", hostname, strconv.FormatInt(emailData.UnsubscribeId, 10))
+	unsubscribeLinkText := fmt.Sprintf("Seibert Software Solutions, LLC @ PO Box 913, Harrison TN, 37341, You can unsubscribe here: %s/unsubscribe/%s", hostname, emailData.UnsubscribeId)
 
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("us-east-1")},

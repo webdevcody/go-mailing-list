@@ -5,20 +5,21 @@ import (
 )
 
 type Email struct {
-	Id    int64
-	Email string
+	Id            int64
+	Email         string
+	UnsubscribeId string
 }
 
 func CreateEmail(email string) (Email, error) {
 	db := db.GetDB()
-	stmt, err := db.Prepare("INSERT INTO emails (email) VALUES (?) RETURNING id, email")
+	stmt, err := db.Prepare("INSERT INTO emails (email, unsubscribeId) VALUES (?, lower(hex(randomblob(32)))) RETURNING id, email")
 	if err != nil {
 		panic(err)
 	}
 	defer stmt.Close()
 
 	var createdEmail Email
-	err = stmt.QueryRow(email).Scan(&createdEmail.Id, &createdEmail.Email)
+	err = stmt.QueryRow(email).Scan(&createdEmail.Id, &createdEmail.Email, &createdEmail.UnsubscribeId)
 	if err != nil {
 		return Email{}, err
 	}
@@ -61,10 +62,23 @@ func GetEmails() []Email {
 	var emails []Email
 	for results.Next() {
 		var email Email
-		if err := results.Scan(&email.Id, &email.Email); err != nil {
+		if err := results.Scan(&email.Id, &email.Email, &email.UnsubscribeId); err != nil {
 			panic(err)
 		}
 		emails = append(emails, email)
 	}
 	return emails
+}
+
+func DeleteEmailByUnsubscribeId(unsubscribeId string) error {
+	db := db.GetDB()
+	stmt, err := db.Prepare("DELETE FROM emails WHERE unsubscribeId = ?")
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(unsubscribeId)
+	if err != nil {
+		return err
+	}
+	return nil
 }
