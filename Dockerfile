@@ -1,4 +1,4 @@
-FROM golang:1.24-bullseye AS builder
+FROM golang:1.22.5-bullseye AS builder
 WORKDIR /app
 RUN apt-get update -qq && \
 	apt-get install --no-install-recommends -y build-essential pkg-config python-is-python3 upx
@@ -19,8 +19,7 @@ RUN wget https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz && \
 
 RUN apt-get install -y --no-install-recommends ca-certificates
 
-
-RUN go install github.com/a-h/templ/cmd/templ@latest
+RUN go install github.com/a-h/templ/cmd/templ@v0.2.747
 
 COPY go.mod go.sum package-lock.json package.json ./
 RUN npm ci
