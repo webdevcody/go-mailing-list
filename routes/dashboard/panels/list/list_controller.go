@@ -64,7 +64,7 @@ func RegisterListPanel(app *fiber.App) {
 		emailIdString := c.FormValue("id")
 		emailId, err := strconv.ParseInt(emailIdString, 10, 64)
 		if err != nil {
-			panic(err)
+			return c.SendStatus(fiber.StatusBadRequest)
 		}
 		dataAccess.DeleteEmail(emailId)
 		return c.SendStatus(fiber.StatusOK)

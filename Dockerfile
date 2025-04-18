@@ -1,4 +1,4 @@
-FROM golang:1.22.5-bullseye AS builder
+FROM golang:1.24-bullseye AS builder
 WORKDIR /app
 RUN apt-get update -qq && \
 	apt-get install --no-install-recommends -y build-essential pkg-config python-is-python3 upx
