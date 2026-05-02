@@ -1,37 +1,24 @@
-FROM golang:1.22.5-bullseye AS builder
+FROM node:22-bookworm-slim AS deps
 WORKDIR /app
 RUN apt-get update -qq && \
-	apt-get install --no-install-recommends -y build-essential pkg-config python-is-python3 upx
-
-RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash - && \
-	apt-get install -y nodejs \
-	build-essential && \
-	node --version && \ 
-	npm --version
-
-# install zig toolchain
-RUN wget https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz && \
-	tar -xf zig-linux-x86_64-0.13.0.tar.xz && \
-	mv zig-linux-x86_64-0.13.0 /usr/local/zig && \
-	rm zig-linux-x86_64-0.13.0.tar.xz && \
-	ln -s /usr/local/zig/zig /usr/local/bin/zig && \
-	zig version
-
-RUN apt-get install -y --no-install-recommends ca-certificates
-
-RUN go install github.com/a-h/templ/cmd/templ@v0.2.747
-
-COPY go.mod go.sum package-lock.json package.json ./
+    apt-get install --no-install-recommends -y python-is-python3 build-essential pkg-config && \
+    rm -rf /var/lib/apt/lists/*
+COPY package.json package-lock.json ./
 RUN npm ci
-RUN go version
-RUN go mod tidy
-COPY . .
-RUN make -f tiny-bundle.mk build
 
-FROM scratch
+FROM node:22-bookworm-slim AS builder
 WORKDIR /app
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=builder /app/bin .
-COPY --from=builder /app/public ./public
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y python-is-python3 build-essential pkg-config && \
+    rm -rf /var/lib/apt/lists/*
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+FROM node:22-bookworm-slim AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/.output ./.output
+COPY --from=builder /app/package.json ./package.json
 EXPOSE 3000
-CMD [ "/app/app_prod" ]
+CMD ["node", ".output/server/index.mjs"]

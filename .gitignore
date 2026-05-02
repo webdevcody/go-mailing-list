@@ -1,7 +1,9 @@
 node_modules/
 tmp/
-**/*_templ.go
-**/*_templ.txt
 local.db
+local.db-*
 .env
 bin/
+.output/
+.DS_Store
+*.log

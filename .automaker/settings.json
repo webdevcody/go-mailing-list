@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "worktrees": [
+    {
+      "path": "/Users/webdevcody/Workspace/go-mailing-list",
+      "branch": "main",
+      "isMain": true,
+      "isCurrent": true,
+      "hasWorktree": true,
+      "hasChanges": true,
+      "changedFilesCount": 1
+    }
+  ]
+}
