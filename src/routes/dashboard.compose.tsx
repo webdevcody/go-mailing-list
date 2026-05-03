@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { createFileRoute, Link, redirect, useNavigate } from '@tanstack/react-router'
+import { Outlet, createFileRoute, redirect, useNavigate, useRouterState } from '@tanstack/react-router'
 import { FileText, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -35,11 +35,16 @@ export const Route = createFileRoute('/dashboard/compose')({
 })
 
 function TemplateListPage() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname })
   const { data: auth } = useAuth()
   const { data: templates } = useTemplates()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [isCreating, setIsCreating] = useState(false)
+
+  if (pathname !== '/dashboard/compose') {
+    return <Outlet />
+  }
 
   async function onCreate() {
     setIsCreating(true)
@@ -89,13 +94,16 @@ function TemplateListPage() {
                 </CardHeader>
                 <CardContent className="flex-1" />
                 <CardFooter>
-                  <Button asChild className="w-full">
-                    <Link
-                      to="/dashboard/compose/$templateId"
-                      params={{ templateId: String(template.id) }}
-                    >
-                      Edit
-                    </Link>
+                  <Button
+                    className="w-full"
+                    onClick={() =>
+                      navigate({
+                        to: '/dashboard/compose/$templateId',
+                        params: { templateId: String(template.id) },
+                      })
+                    }
+                  >
+                    Edit
                   </Button>
                 </CardFooter>
               </Card>
