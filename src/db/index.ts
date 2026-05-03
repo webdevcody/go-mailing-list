@@ -28,5 +28,14 @@ if (emailColumns.length > 0 && !emailColumnNames.has('bounceReason')) {
   sqlite.exec('ALTER TABLE emails ADD COLUMN bounceReason TEXT')
 }
 
+const sessionColumns = sqlite.prepare('PRAGMA table_info(sessions)').all() as Array<{ name: string }>
+const sessionColumnNames = new Set(sessionColumns.map((column) => column.name))
+
+if (sessionColumns.length > 0 && !sessionColumnNames.has('expiresAt')) {
+  sqlite.exec('ALTER TABLE sessions ADD COLUMN expiresAt TEXT')
+}
+
+sqlite.exec('CREATE UNIQUE INDEX IF NOT EXISTS sessions_session_id_unique ON sessions (sessionId)')
+
 export const db = drizzle({ client: sqlite, schema })
 export { sqlite }

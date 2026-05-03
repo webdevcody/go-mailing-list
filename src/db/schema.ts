@@ -12,10 +12,15 @@ export const emails = sqliteTable(
   (table) => [uniqueIndex('email_unique').on(table.email)],
 )
 
-export const sessions = sqliteTable('sessions', {
-  id: integer('id').primaryKey(),
-  sessionId: text('sessionId'),
-})
+export const sessions = sqliteTable(
+  'sessions',
+  {
+    id: integer('id').primaryKey(),
+    sessionId: text('sessionId'),
+    expiresAt: text('expiresAt'),
+  },
+  (table) => [uniqueIndex('sessions_session_id_unique').on(table.sessionId)],
+)
 
 export const templates = sqliteTable('templates', {
   id: integer('id').primaryKey(),

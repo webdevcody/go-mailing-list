@@ -18,6 +18,7 @@ import { Route as UnsubscribeUnsubscribeIdRouteImport } from './routes/unsubscri
 import { Route as DashboardListRouteImport } from './routes/dashboard.list'
 import { Route as DashboardComposeRouteImport } from './routes/dashboard.compose'
 import { Route as ApiSubscribeRouteImport } from './routes/api/subscribe'
+import { Route as ApiExportRouteImport } from './routes/api/export'
 import { Route as ApiBouncedRouteImport } from './routes/api/bounced'
 import { Route as DashboardComposeTemplateIdRouteImport } from './routes/dashboard.compose.$templateId'
 
@@ -67,6 +68,11 @@ const ApiSubscribeRoute = ApiSubscribeRouteImport.update({
   path: '/api/subscribe',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiExportRoute = ApiExportRouteImport.update({
+  id: '/api/export',
+  path: '/api/export',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiBouncedRoute = ApiBouncedRouteImport.update({
   id: '/api/bounced',
   path: '/api/bounced',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/logout': typeof LogoutRoute
   '/unsubscribe-success': typeof UnsubscribeSuccessRoute
   '/api/bounced': typeof ApiBouncedRoute
+  '/api/export': typeof ApiExportRoute
   '/api/subscribe': typeof ApiSubscribeRoute
   '/dashboard/compose': typeof DashboardComposeRouteWithChildren
   '/dashboard/list': typeof DashboardListRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/logout': typeof LogoutRoute
   '/unsubscribe-success': typeof UnsubscribeSuccessRoute
   '/api/bounced': typeof ApiBouncedRoute
+  '/api/export': typeof ApiExportRoute
   '/api/subscribe': typeof ApiSubscribeRoute
   '/dashboard/compose': typeof DashboardComposeRouteWithChildren
   '/dashboard/list': typeof DashboardListRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/logout': typeof LogoutRoute
   '/unsubscribe-success': typeof UnsubscribeSuccessRoute
   '/api/bounced': typeof ApiBouncedRoute
+  '/api/export': typeof ApiExportRoute
   '/api/subscribe': typeof ApiSubscribeRoute
   '/dashboard/compose': typeof DashboardComposeRouteWithChildren
   '/dashboard/list': typeof DashboardListRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/logout'
     | '/unsubscribe-success'
     | '/api/bounced'
+    | '/api/export'
     | '/api/subscribe'
     | '/dashboard/compose'
     | '/dashboard/list'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/logout'
     | '/unsubscribe-success'
     | '/api/bounced'
+    | '/api/export'
     | '/api/subscribe'
     | '/dashboard/compose'
     | '/dashboard/list'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/logout'
     | '/unsubscribe-success'
     | '/api/bounced'
+    | '/api/export'
     | '/api/subscribe'
     | '/dashboard/compose'
     | '/dashboard/list'
@@ -168,6 +180,7 @@ export interface RootRouteChildren {
   LogoutRoute: typeof LogoutRoute
   UnsubscribeSuccessRoute: typeof UnsubscribeSuccessRoute
   ApiBouncedRoute: typeof ApiBouncedRoute
+  ApiExportRoute: typeof ApiExportRoute
   ApiSubscribeRoute: typeof ApiSubscribeRoute
   UnsubscribeUnsubscribeIdRoute: typeof UnsubscribeUnsubscribeIdRoute
 }
@@ -237,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSubscribeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/export': {
+      id: '/api/export'
+      path: '/api/export'
+      fullPath: '/api/export'
+      preLoaderRoute: typeof ApiExportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/bounced': {
       id: '/api/bounced'
       path: '/api/bounced'
@@ -286,6 +306,7 @@ const rootRouteChildren: RootRouteChildren = {
   LogoutRoute: LogoutRoute,
   UnsubscribeSuccessRoute: UnsubscribeSuccessRoute,
   ApiBouncedRoute: ApiBouncedRoute,
+  ApiExportRoute: ApiExportRoute,
   ApiSubscribeRoute: ApiSubscribeRoute,
   UnsubscribeUnsubscribeIdRoute: UnsubscribeUnsubscribeIdRoute,
 }

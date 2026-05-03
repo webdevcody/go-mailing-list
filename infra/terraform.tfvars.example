@@ -1,0 +1,19 @@
+aws_region   = "us-east-1"
+domain_name  = "example.com"
+app_url      = "https://mailing-list.example.com"
+api_token    = "same-value-as-PASSWORD"
+project_name = "go-mailing-list"
+
+# Optional. If set, Terraform will also manage SES DNS records.
+# route53_zone_id = "Z00000000000000000000"
+
+# Optional custom MAIL FROM domain.
+# mail_from_domain = "mail.example.com"
+
+# Optional names if the manually-created resources used different names.
+# lambda_name                    = "go-mailing-list-bounced-handler"
+# lambda_role_name               = "go-mailing-list-bounced-handler-role"
+# lambda_role_path               = "/service-role/"
+# lambda_basic_policy_arn        = "arn:aws:iam::123456789012:policy/service-role/AWSLambdaBasicExecutionRole-abc123"
+# lambda_permission_statement_id = "lambda-00000000-0000-0000-0000-000000000000"
+# sns_topic_name                 = "go-mailing-list-ses-bounces"

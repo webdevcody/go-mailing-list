@@ -1,4 +1,4 @@
-import { eq, isNotNull, isNull } from 'drizzle-orm'
+import { eq, isNotNull, isNull, lte } from 'drizzle-orm'
 import { db } from '~/db'
 import { emails, sessions, templates, type Template } from '~/db/schema'
 import { randomHex } from './crypto'
@@ -74,15 +74,31 @@ export async function deleteEmailByUnsubscribeId(unsubscribeId: string) {
 }
 
 export async function findSession(sessionId: string) {
-  return db.select().from(sessions).where(eq(sessions.sessionId, sessionId)).get()
+  const session = db.select().from(sessions).where(eq(sessions.sessionId, sessionId)).get()
+
+  if (!session) {
+    return undefined
+  }
+
+  if (session.expiresAt && new Date(session.expiresAt).getTime() <= Date.now()) {
+    db.delete(sessions).where(eq(sessions.sessionId, sessionId)).run()
+    return undefined
+  }
+
+  return session
 }
 
-export async function createSession(sessionId: string) {
-  return db.insert(sessions).values({ sessionId }).returning().get()
+export async function createSession(sessionId: string, expiresAt: Date) {
+  return db.insert(sessions).values({ sessionId, expiresAt: expiresAt.toISOString() }).returning().get()
 }
 
 export async function deleteSession(sessionId: string) {
   db.delete(sessions).where(eq(sessions.sessionId, sessionId)).run()
+}
+
+export async function deleteExpiredSessions() {
+  const now = new Date().toISOString()
+  db.delete(sessions).where(lte(sessions.expiresAt, now)).run()
 }
 
 export async function listTemplates() {

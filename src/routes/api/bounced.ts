@@ -4,9 +4,10 @@ export const Route = createFileRoute('/api/bounced')({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { isRequestAuthenticated } = await import('~/lib/auth.server')
+        const { isBounceWebhookAuthorized } = await import('~/lib/auth.server')
 
-        if (!(await isRequestAuthenticated(request))) {
+        if (!isBounceWebhookAuthorized(request.headers.get('authorization'))) {
+          console.warn('bounce webhook: unauthorized request')
           return new Response(null, { status: 401 })
         }
 
@@ -15,12 +16,19 @@ export const Route = createFileRoute('/api/bounced')({
         const reason = form.get('reason')
 
         if (typeof email !== 'string' || !email) {
+          console.warn('bounce webhook: missing email')
           return new Response(null, { status: 400 })
         }
 
-        const { markEmailBounced } = await import('~/lib/repositories')
-        await markEmailBounced(email, typeof reason === 'string' ? reason : undefined)
-        return new Response(null, { status: 200 })
+        try {
+          const { markEmailBounced } = await import('~/lib/repositories')
+          await markEmailBounced(email, typeof reason === 'string' ? reason : undefined)
+          console.info('bounce webhook: marked bounced', { email })
+          return new Response(null, { status: 200 })
+        } catch (error) {
+          console.error('bounce webhook: failed to mark bounced', { email, error })
+          return new Response(null, { status: 500 })
+        }
       },
     },
   },

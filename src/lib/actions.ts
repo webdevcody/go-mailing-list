@@ -99,8 +99,16 @@ export const sendTestTemplate = createServerFn({ method: 'POST' })
     return sendTestTemplateFromServer(data)
   })
 
+const unsubscribeInput = z.object({
+  unsubscribeId: z
+    .string()
+    .min(16)
+    .max(128)
+    .regex(/^[a-f0-9]+$/i, 'Invalid unsubscribe id'),
+})
+
 export const unsubscribeEmail = createServerFn({ method: 'POST' })
-  .inputValidator((input: { unsubscribeId: string }) => input)
+  .inputValidator((input: z.infer<typeof unsubscribeInput>) => unsubscribeInput.parse(input))
   .handler(async ({ data }) => {
     const { unsubscribeEmailFromServer } = await import('./actions.server')
     return unsubscribeEmailFromServer(data.unsubscribeId)

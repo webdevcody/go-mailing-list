@@ -1,9 +1,47 @@
 node_modules/
 tmp/
-local.db
-local.db-*
-.env
 bin/
 .output/
 .DS_Store
 *.log
+
+# Local databases and runtime files
+*.db
+*.db-*
+local.db
+local.db-*
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.jks
+*.keystore
+*.secrets
+secrets.*
+
+# Terraform local state, secrets, and generated files
+**/.terraform/
+**/.tvenv
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# AWS / deployment local files
+.aws/
+aws-exports.*

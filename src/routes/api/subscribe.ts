@@ -5,24 +5,27 @@ export const Route = createFileRoute('/api/subscribe')({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { isRequestAuthenticated } = await import('~/lib/auth.server')
-
-        if (!(await isRequestAuthenticated(request))) {
-          return new Response(null, { status: 401 })
-        }
-
         const email = await readEmail(request)
 
         if (!email || !isEmail(email)) {
           return new Response(null, { status: 400 })
         }
 
+        const normalized = email.trim().toLowerCase()
+
         try {
           const { createEmail } = await import('~/lib/repositories')
-          await createEmail(email.trim().toLowerCase())
+          await createEmail(normalized)
           return new Response(null, { status: 200 })
-        } catch {
-          return new Response(null, { status: 400 })
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error)
+
+          if (message.includes('UNIQUE') || message.includes('unique')) {
+            return new Response(null, { status: 200 })
+          }
+
+          console.error('subscribe: failed to create email', { error })
+          return new Response(null, { status: 500 })
         }
       },
     },

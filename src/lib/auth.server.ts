@@ -8,12 +8,17 @@ import { createSession, deleteSession, findSession } from './repositories'
 import { constantTimeEqual, randomHex } from './crypto'
 
 const sessionCookieName = 'session'
+const sessionMaxAgeSeconds = 60 * 60 * 24 * 30
 const maxLoginAttempts = 5
-let attempts = 0
-let resetAt = 0
+const loginAttemptWindowSeconds = 60 * 15
+const loginAttemptBuckets = new Map<string, { count: number; resetAt: number }>()
 
 function expectedPassword() {
   return process.env.PASSWORD ?? ''
+}
+
+function expectedBounceWebhookSecret() {
+  return process.env.BOUNCE_WEBHOOK_SECRET ?? ''
 }
 
 export function isValidPassword(password: string) {
@@ -26,19 +31,48 @@ export function isValidPassword(password: string) {
   return constantTimeEqual(password, expected)
 }
 
-function assertUnderLoginRateLimit() {
-  const now = Math.floor(Date.now() / 1000)
+export function isValidBounceWebhookToken(token: string) {
+  const expected = expectedBounceWebhookSecret()
 
-  if (now > resetAt) {
-    resetAt = now + 1
-    attempts = 0
+  if (!expected) {
+    return false
   }
 
-  if (attempts >= maxLoginAttempts) {
+  return constantTimeEqual(token, expected)
+}
+
+export function isBounceWebhookAuthorized(header: string | null) {
+  if (!header) {
+    return false
+  }
+
+  const token = header.startsWith('Bearer ') ? header.slice('Bearer '.length) : header
+  return isValidBounceWebhookToken(token)
+}
+
+function assertUnderLoginRateLimit(key: string) {
+  const now = Math.floor(Date.now() / 1000)
+  const bucket = loginAttemptBuckets.get(key)
+
+  if (!bucket || now > bucket.resetAt) {
+    loginAttemptBuckets.set(key, { count: 1, resetAt: now + loginAttemptWindowSeconds })
+
+    if (loginAttemptBuckets.size > 1024) {
+      for (const [bucketKey, value] of loginAttemptBuckets) {
+        if (now > value.resetAt) {
+          loginAttemptBuckets.delete(bucketKey)
+        }
+      }
+    }
+
+    return
+  }
+
+  if (bucket.count >= maxLoginAttempts) {
     throw new Error('Too many login attempts')
   }
 
-  attempts += 1
+  bucket.count += 1
 }
 
 export function isBearerAuthorized(header: string | null) {
@@ -107,8 +141,22 @@ export async function assertAuthenticatedFromServerContext() {
   }
 }
 
+function rateLimitKeyFromServerContext() {
+  const forwarded = getRequestHeader('x-forwarded-for')
+
+  if (forwarded) {
+    const first = forwarded.split(',')[0]?.trim()
+
+    if (first) {
+      return first
+    }
+  }
+
+  return getRequestHeader('x-real-ip') ?? 'unknown'
+}
+
 export async function loginFromServerContext(password: string) {
-  assertUnderLoginRateLimit()
+  assertUnderLoginRateLimit(rateLimitKeyFromServerContext())
 
   if (!isValidPassword(password)) {
     return {
@@ -118,7 +166,8 @@ export async function loginFromServerContext(password: string) {
   }
 
   const sessionId = randomHex(32)
-  await createSession(sessionId)
+  const expiresAt = new Date(Date.now() + sessionMaxAgeSeconds * 1000)
+  await createSession(sessionId, expiresAt)
   setCookie(sessionCookieName, sessionId, {
     httpOnly: true,
     secure:
@@ -127,6 +176,7 @@ export async function loginFromServerContext(password: string) {
         : process.env.NODE_ENV === 'production',
     sameSite: 'strict',
     path: '/',
+    maxAge: sessionMaxAgeSeconds,
   })
 
   return {

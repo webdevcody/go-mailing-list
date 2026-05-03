@@ -1,5 +1,5 @@
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router'
-import { AlertTriangle, Plus, Trash2 } from 'lucide-react'
+import { AlertTriangle, Download, Plus, Trash2 } from 'lucide-react'
 import type * as React from 'react'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -127,9 +127,17 @@ function SubscriberListPage() {
   return (
     <AppShell auth={auth} section="subscribers">
       <div className="space-y-8">
-        <div>
-          <h1 className="text-3xl font-semibold tracking-tight">Subscribers</h1>
-          <p className="text-muted-foreground mt-2">Add addresses, review the current list, and remove stale entries.</p>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h1 className="text-3xl font-semibold tracking-tight">Subscribers</h1>
+            <p className="text-muted-foreground mt-2">Add addresses, review the current list, and remove stale entries.</p>
+          </div>
+          <Button asChild variant="outline">
+            <a href="/api/export" download>
+              <Download />
+              Export CSV
+            </a>
+          </Button>
         </div>
 
         <Card>
