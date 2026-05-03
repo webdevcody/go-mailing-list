@@ -12,13 +12,14 @@ export const Route = createFileRoute('/api/bounced')({
 
         const form = await request.formData()
         const email = form.get('email')
+        const reason = form.get('reason')
 
         if (typeof email !== 'string' || !email) {
           return new Response(null, { status: 400 })
         }
 
-        const { deleteEmailByEmail } = await import('~/lib/repositories')
-        await deleteEmailByEmail(email)
+        const { markEmailBounced } = await import('~/lib/repositories')
+        await markEmailBounced(email, typeof reason === 'string' ? reason : undefined)
         return new Response(null, { status: 200 })
       },
     },

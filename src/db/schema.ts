@@ -6,6 +6,8 @@ export const emails = sqliteTable(
     id: integer('id').primaryKey(),
     email: text('email'),
     unsubscribeId: text('unsubscribeId'),
+    bouncedAt: text('bouncedAt'),
+    bounceReason: text('bounceReason'),
   },
   (table) => [uniqueIndex('email_unique').on(table.email)],
 )

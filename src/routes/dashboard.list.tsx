@@ -1,5 +1,5 @@
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router'
-import { Plus, Trash2 } from 'lucide-react'
+import { AlertTriangle, Plus, Trash2 } from 'lucide-react'
 import type * as React from 'react'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -13,6 +13,16 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/card'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/ui/dialog'
 import { Label } from '~/components/ui/label'
 import {
   Table,
@@ -23,7 +33,13 @@ import {
   TableRow,
 } from '~/components/ui/table'
 import { Textarea } from '~/components/ui/textarea'
-import { addSubscribers, fetchSubscribers, removeSubscriber } from '~/lib/actions'
+import {
+  addSubscribers,
+  fetchBouncedSubscribers,
+  fetchSubscribers,
+  removeBouncedSubscribers,
+  removeSubscriber,
+} from '~/lib/actions'
 import { getAuthState } from '~/lib/auth'
 
 export const Route = createFileRoute('/dashboard/list')({
@@ -36,6 +52,7 @@ export const Route = createFileRoute('/dashboard/list')({
 
     return {
       auth,
+      bouncedEmails: await fetchBouncedSubscribers(),
       emails: await fetchSubscribers(),
     }
   },
@@ -43,10 +60,12 @@ export const Route = createFileRoute('/dashboard/list')({
 })
 
 function SubscriberListPage() {
-  const { auth, emails } = Route.useLoaderData()
+  const { auth, bouncedEmails, emails } = Route.useLoaderData()
   const router = useRouter()
   const [value, setValue] = useState('')
   const [isAdding, setIsAdding] = useState(false)
+  const [isDeletingBounced, setIsDeletingBounced] = useState(false)
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
   const [deletingId, setDeletingId] = useState<number | null>(null)
   const [summary, setSummary] = useState<{
     created: number
@@ -90,6 +109,21 @@ function SubscriberListPage() {
     }
   }
 
+  async function onDeleteBounced() {
+    setIsDeletingBounced(true)
+
+    try {
+      const result = await removeBouncedSubscribers()
+      setIsConfirmOpen(false)
+      await router.invalidate()
+      toast.success(`Deleted ${result.deleted} bounced email${result.deleted === 1 ? '' : 's'}`)
+    } catch {
+      toast.error('Could not delete bounced emails')
+    } finally {
+      setIsDeletingBounced(false)
+    }
+  }
+
   return (
     <AppShell auth={auth} section="subscribers">
       <div className="space-y-8">
@@ -129,7 +163,7 @@ function SubscriberListPage() {
         <Card>
           <CardHeader>
             <CardTitle>Current list ({emails.length})</CardTitle>
-            <CardDescription>These addresses receive bulk sends unless they unsubscribe or bounce.</CardDescription>
+            <CardDescription>These addresses receive bulk sends unless they unsubscribe or are flagged as bounced.</CardDescription>
           </CardHeader>
           <CardContent>
             {emails.length === 0 ? (
@@ -156,6 +190,67 @@ function SubscriberListPage() {
                         >
                           <Trash2 />
                         </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <CardTitle>Bounced emails ({bouncedEmails.length})</CardTitle>
+              <CardDescription>These addresses are flagged from SES bounce events and are excluded from bulk sends.</CardDescription>
+            </div>
+            <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
+              <DialogTrigger asChild>
+                <Button variant="destructive" disabled={bouncedEmails.length === 0}>
+                  <Trash2 />
+                  Delete all bounced
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Delete bounced emails?</DialogTitle>
+                  <DialogDescription>
+                    This will permanently remove {bouncedEmails.length} bounced email
+                    {bouncedEmails.length === 1 ? '' : 's'} from the mailing list.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                  <Button variant="destructive" isLoading={isDeletingBounced} onClick={onDeleteBounced}>
+                    <AlertTriangle />
+                    Confirm delete
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </CardHeader>
+          <CardContent>
+            {bouncedEmails.length === 0 ? (
+              <EmptyState title="No bounced emails" description="Bounced addresses will appear here after SES reports them." />
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Reason</TableHead>
+                    <TableHead className="w-48">Bounced at</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {bouncedEmails.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-medium">{item.email}</TableCell>
+                      <TableCell>{item.bounceReason || 'Bounce'}</TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {item.bouncedAt ? new Date(item.bouncedAt).toLocaleString() : ''}
                       </TableCell>
                     </TableRow>
                   ))}

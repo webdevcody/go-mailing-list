@@ -4,9 +4,11 @@ import type { SendEmailInput } from './mailer'
 import {
   createEmails,
   createTemplate,
+  deleteBouncedEmails,
   deleteEmailById,
   deleteTemplate,
   getTemplate,
+  listBouncedEmails,
   listEmails,
   listTemplates,
   updateTemplate,
@@ -26,6 +28,11 @@ export async function fetchSubscribersFromServer() {
   return listEmails()
 }
 
+export async function fetchBouncedSubscribersFromServer() {
+  await assertAuthenticatedFromServerContext()
+  return listBouncedEmails()
+}
+
 export async function addSubscribersFromServer(input: string) {
   await assertAuthenticatedFromServerContext()
   const parsed = parseEmailLines(input)
@@ -42,6 +49,12 @@ export async function removeSubscriberFromServer(id: number) {
   await assertAuthenticatedFromServerContext()
   await deleteEmailById(id)
   return { ok: true }
+}
+
+export async function removeBouncedSubscribersFromServer() {
+  await assertAuthenticatedFromServerContext()
+  const deleted = await deleteBouncedEmails()
+  return { deleted }
 }
 
 export async function fetchTemplatesFromServer() {

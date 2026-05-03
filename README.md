@@ -1,6 +1,6 @@
 # Mailing List
 
-TanStack Start app for managing subscribers, MJML email templates, SES sends, unsubscribe links, and bounce removals.
+TanStack Start app for managing subscribers, MJML email templates, SES sends, unsubscribe links, and bounce tracking/removals.
 
 ## Requirements
 
@@ -49,4 +49,4 @@ For Railway, mount a persistent volume and set `DATABASE_URL` to that SQLite fil
 1. Deploy the Node 22 Docker image or Railway Node service.
 2. Set the environment variables above.
 3. Configure SES identity/domain records.
-4. Keep `lambda/bounced-handler.js` pointed at `/api/bounced` with `API_TOKEN` matching `PASSWORD`.
+4. Keep `lambda/bounced-handler.js` pointed at `/api/bounced` with `API_TOKEN` matching `PASSWORD`. Bounce events flag addresses as bounced, exclude them from bulk sends, and show them in the Subscribers UI for confirmed deletion.

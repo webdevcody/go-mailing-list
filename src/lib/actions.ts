@@ -23,6 +23,11 @@ export const fetchSubscribers = createServerFn({ method: 'GET' }).handler(async 
   return fetchSubscribersFromServer()
 })
 
+export const fetchBouncedSubscribers = createServerFn({ method: 'GET' }).handler(async () => {
+  const { fetchBouncedSubscribersFromServer } = await import('./actions.server')
+  return fetchBouncedSubscribersFromServer()
+})
+
 export const addSubscribers = createServerFn({ method: 'POST' })
   .inputValidator((input: { emails: string }) => input)
   .handler(async ({ data }) => {
@@ -36,6 +41,11 @@ export const removeSubscriber = createServerFn({ method: 'POST' })
     const { removeSubscriberFromServer } = await import('./actions.server')
     return removeSubscriberFromServer(data.id)
   })
+
+export const removeBouncedSubscribers = createServerFn({ method: 'POST' }).handler(async () => {
+  const { removeBouncedSubscribersFromServer } = await import('./actions.server')
+  return removeBouncedSubscribersFromServer()
+})
 
 export const fetchTemplates = createServerFn({ method: 'GET' }).handler(async () => {
   const { fetchTemplatesFromServer } = await import('./actions.server')
