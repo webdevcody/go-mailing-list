@@ -25,6 +25,29 @@
   --radius: 0.5rem;
 }
 
+.dark {
+  color-scheme: dark;
+  --background: oklch(0.18 0.02 79);
+  --foreground: oklch(0.96 0.01 92);
+  --card: oklch(0.22 0.02 79);
+  --card-foreground: oklch(0.96 0.01 92);
+  --popover: oklch(0.22 0.02 79);
+  --popover-foreground: oklch(0.96 0.01 92);
+  --primary: oklch(0.72 0.12 173);
+  --primary-foreground: oklch(0.18 0.03 175);
+  --secondary: oklch(0.28 0.02 79);
+  --secondary-foreground: oklch(0.96 0.01 92);
+  --muted: oklch(0.26 0.02 79);
+  --muted-foreground: oklch(0.72 0.02 79);
+  --accent: oklch(0.32 0.05 165);
+  --accent-foreground: oklch(0.94 0.04 164);
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.98 0.01 25);
+  --border: oklch(0.32 0.02 79);
+  --input: oklch(0.32 0.02 79);
+  --ring: oklch(0.72 0.12 173);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 import type { AuthState } from '~/fn/auth'
 import { Button } from './ui/button'
 import { Separator } from './ui/separator'
+import { ThemeToggle } from './theme-toggle'
 
 type AppShellProps = {
   auth: AuthState
@@ -20,18 +21,21 @@ export function AppShell({ auth, section, children }: AppShellProps) {
             <img src="/logo.png" alt="" className="size-8" />
             Mailing List
           </Link>
-          {auth.isAuthenticated ? (
-            <Button variant="ghost" asChild>
-              <Link to="/logout">
-                <LogOut />
-                Logout
-              </Link>
-            </Button>
-          ) : (
-            <Button variant="ghost" asChild>
-              <Link to="/login">Login</Link>
-            </Button>
-          )}
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            {auth.isAuthenticated ? (
+              <Button variant="ghost" asChild>
+                <Link to="/logout">
+                  <LogOut />
+                  Logout
+                </Link>
+              </Button>
+            ) : (
+              <Button variant="ghost" asChild>
+                <Link to="/login">Login</Link>
+              </Button>
+            )}
+          </div>
         </div>
       </header>
       <main className="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[220px_1fr] lg:px-8">
