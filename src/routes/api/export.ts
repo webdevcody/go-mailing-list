@@ -17,9 +17,8 @@ export const Route = createFileRoute('/api/export')({
           return new Response(null, { status: 401 })
         }
 
-        const { db } = await import('~/db')
-        const { emails } = await import('~/db/schema')
-        const rows = await db.select().from(emails).orderBy(emails.email)
+        const { listAllEmails } = await import('~/data-access/emails')
+        const rows = await listAllEmails()
 
         const header = ['id', 'email', 'unsubscribeId', 'bouncedAt', 'bounceReason']
         const lines = [header.join(',')]

@@ -1,4 +1,5 @@
-import { createFileRoute, notFound, redirect, useNavigate, useRouter } from '@tanstack/react-router'
+import { useQueryClient } from '@tanstack/react-query'
+import { createFileRoute, notFound, redirect, useNavigate } from '@tanstack/react-router'
 import { Mail, Save, Send, Trash2, Wand2 } from 'lucide-react'
 import type * as React from 'react'
 import { useEffect, useMemo, useState } from 'react'
@@ -26,18 +27,14 @@ import {
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { Textarea } from '~/components/ui/textarea'
-import {
-  convertTemplate,
-  fetchTemplate,
-  removeTemplate,
-  saveTemplate,
-  sendTemplateToSubscribers,
-  sendTestTemplate,
-} from '~/lib/actions'
-import { getAuthState } from '~/lib/auth'
+import { getAuthState } from '~/fn/auth'
+import { sendTemplateToSubscribers, sendTestTemplate } from '~/fn/mailer'
+import { convertTemplate, removeTemplate, saveTemplate } from '~/fn/templates'
+import { authQueryOptions, useAuth } from '~/queries/auth'
+import { templateQueryOptions, useTemplate } from '~/queries/templates'
 
 export const Route = createFileRoute('/dashboard/compose/$templateId')({
-  loader: async ({ params }) => {
+  loader: async ({ context, params }) => {
     const auth = await getAuthState()
 
     if (!auth.isAuthenticated) {
@@ -50,25 +47,30 @@ export const Route = createFileRoute('/dashboard/compose/$templateId')({
       throw notFound()
     }
 
-    const template = await fetchTemplate({ data: { id } })
+    const [, template] = await Promise.all([
+      context.queryClient.ensureQueryData(authQueryOptions()),
+      context.queryClient.ensureQueryData(templateQueryOptions(id)),
+    ])
 
     if (!template) {
       throw notFound()
     }
 
-    return { auth, template }
+    return { templateId: id }
   },
   component: TemplateEditorPage,
 })
 
 function TemplateEditorPage() {
-  const { auth, template } = Route.useLoaderData()
-  const router = useRouter()
+  const { templateId } = Route.useLoaderData()
+  const { data: auth } = useAuth()
+  const { data: template } = useTemplate(templateId)
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const [subject, setSubject] = useState(template.subject ?? '')
-  const [mjml, setMjml] = useState(template.mjml ?? '')
-  const [html, setHtml] = useState(template.html ?? '')
-  const [text, setText] = useState(template.text ?? '')
+  const [subject, setSubject] = useState(template?.subject ?? '')
+  const [mjml, setMjml] = useState(template?.mjml ?? '')
+  const [html, setHtml] = useState(template?.html ?? '')
+  const [text, setText] = useState(template?.text ?? '')
   const [errors, setErrors] = useState<Array<string>>([])
   const [isSaving, setIsSaving] = useState(false)
   const [isConverting, setIsConverting] = useState(false)
@@ -105,14 +107,14 @@ function TemplateEditorPage() {
     try {
       await saveTemplate({
         data: {
-          id: template.id,
+          id: templateId,
           mjml,
           html,
           text,
           subject,
         },
       })
-      await router.invalidate()
+      await queryClient.invalidateQueries({ queryKey: ['templates'] })
       toast.success('Template saved')
     } catch {
       toast.error('Could not save template')
@@ -129,7 +131,8 @@ function TemplateEditorPage() {
     setIsDeleting(true)
 
     try {
-      await removeTemplate({ data: { id: template.id } })
+      await removeTemplate({ data: { id: templateId } })
+      await queryClient.invalidateQueries({ queryKey: ['templates'] })
       toast.success('Template deleted')
       await navigate({ to: '/dashboard/compose' })
     } catch {

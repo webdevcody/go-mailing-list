@@ -1,4 +1,5 @@
-import { createFileRoute, Link, redirect, useNavigate, useRouter } from '@tanstack/react-router'
+import { useQueryClient } from '@tanstack/react-query'
+import { createFileRoute, Link, redirect, useNavigate } from '@tanstack/react-router'
 import { FileText, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -12,29 +13,32 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/card'
-import { fetchTemplates, makeTemplate } from '~/lib/actions'
-import { getAuthState } from '~/lib/auth'
+import { getAuthState } from '~/fn/auth'
+import { makeTemplate } from '~/fn/templates'
+import { authQueryOptions, useAuth } from '~/queries/auth'
+import { templatesQueryOptions, useTemplates } from '~/queries/templates'
 
 export const Route = createFileRoute('/dashboard/compose')({
-  loader: async () => {
+  loader: async ({ context }) => {
     const auth = await getAuthState()
 
     if (!auth.isAuthenticated) {
       throw redirect({ to: '/login' })
     }
 
-    return {
-      auth,
-      templates: await fetchTemplates(),
-    }
+    await Promise.all([
+      context.queryClient.ensureQueryData(authQueryOptions()),
+      context.queryClient.ensureQueryData(templatesQueryOptions()),
+    ])
   },
   component: TemplateListPage,
 })
 
 function TemplateListPage() {
-  const { auth, templates } = Route.useLoaderData()
+  const { data: auth } = useAuth()
+  const { data: templates } = useTemplates()
   const navigate = useNavigate()
-  const router = useRouter()
+  const queryClient = useQueryClient()
   const [isCreating, setIsCreating] = useState(false)
 
   async function onCreate() {
@@ -42,7 +46,7 @@ function TemplateListPage() {
 
     try {
       const template = await makeTemplate()
-      await router.invalidate()
+      await queryClient.invalidateQueries({ queryKey: ['templates'] })
       await navigate({
         to: '/dashboard/compose/$templateId',
         params: { templateId: String(template.id) },

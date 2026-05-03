@@ -21,7 +21,7 @@ export const Route = createFileRoute('/api/bounced')({
         }
 
         try {
-          const { markEmailBounced } = await import('~/lib/repositories')
+          const { markEmailBounced } = await import('~/data-access/emails')
           await markEmailBounced(email, typeof reason === 'string' ? reason : undefined)
           console.info('bounce webhook: marked bounced', { email })
           return new Response(null, { status: 200 })

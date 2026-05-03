@@ -1,6 +1,6 @@
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
-import { unsubscribeEmail } from '~/lib/actions'
+import { unsubscribeEmail } from '~/fn/unsubscribe'
 import { AppShell } from '~/components/app-shell'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'

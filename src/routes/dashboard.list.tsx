@@ -1,4 +1,5 @@
-import { createFileRoute, redirect, useRouter } from '@tanstack/react-router'
+import { useQueryClient } from '@tanstack/react-query'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { AlertTriangle, Download, Plus, Trash2 } from 'lucide-react'
 import type * as React from 'react'
 import { useState } from 'react'
@@ -33,35 +34,35 @@ import {
   TableRow,
 } from '~/components/ui/table'
 import { Textarea } from '~/components/ui/textarea'
-import {
-  addSubscribers,
-  fetchBouncedSubscribers,
-  fetchSubscribers,
-  removeBouncedSubscribers,
-  removeSubscriber,
-} from '~/lib/actions'
-import { getAuthState } from '~/lib/auth'
+import { addSubscribers, removeSubscriber } from '~/fn/subscribers'
+import { removeBouncedSubscribers } from '~/fn/bounced'
+import { getAuthState } from '~/fn/auth'
+import { authQueryOptions, useAuth } from '~/queries/auth'
+import { subscribersQueryOptions, useSubscribers } from '~/queries/subscribers'
+import { bouncedQueryOptions, useBouncedSubscribers } from '~/queries/bounced'
 
 export const Route = createFileRoute('/dashboard/list')({
-  loader: async () => {
+  loader: async ({ context }) => {
     const auth = await getAuthState()
 
     if (!auth.isAuthenticated) {
       throw redirect({ to: '/login' })
     }
 
-    return {
-      auth,
-      bouncedEmails: await fetchBouncedSubscribers(),
-      emails: await fetchSubscribers(),
-    }
+    await Promise.all([
+      context.queryClient.ensureQueryData(authQueryOptions()),
+      context.queryClient.ensureQueryData(subscribersQueryOptions()),
+      context.queryClient.ensureQueryData(bouncedQueryOptions()),
+    ])
   },
   component: SubscriberListPage,
 })
 
 function SubscriberListPage() {
-  const { auth, bouncedEmails, emails } = Route.useLoaderData()
-  const router = useRouter()
+  const { data: auth } = useAuth()
+  const { data: emails } = useSubscribers()
+  const { data: bouncedEmails } = useBouncedSubscribers()
+  const queryClient = useQueryClient()
   const [value, setValue] = useState('')
   const [isAdding, setIsAdding] = useState(false)
   const [isDeletingBounced, setIsDeletingBounced] = useState(false)
@@ -86,7 +87,7 @@ function SubscriberListPage() {
         invalid: result.invalid,
       })
       setValue('')
-      await router.invalidate()
+      await queryClient.invalidateQueries({ queryKey: ['subscribers'] })
       toast.success(`Added ${result.created.length} subscriber${result.created.length === 1 ? '' : 's'}`)
     } catch {
       toast.error('Could not add subscribers')
@@ -100,7 +101,7 @@ function SubscriberListPage() {
 
     try {
       await removeSubscriber({ data: { id } })
-      await router.invalidate()
+      await queryClient.invalidateQueries({ queryKey: ['subscribers'] })
       toast.success('Subscriber removed')
     } catch {
       toast.error('Could not remove subscriber')
@@ -115,7 +116,7 @@ function SubscriberListPage() {
     try {
       const result = await removeBouncedSubscribers()
       setIsConfirmOpen(false)
-      await router.invalidate()
+      await queryClient.invalidateQueries({ queryKey: ['bounced-subscribers'] })
       toast.success(`Deleted ${result.deleted} bounced email${result.deleted === 1 ? '' : 's'}`)
     } catch {
       toast.error('Could not delete bounced emails')

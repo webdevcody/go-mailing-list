@@ -14,7 +14,7 @@ export const Route = createFileRoute('/api/subscribe')({
         const normalized = email.trim().toLowerCase()
 
         try {
-          const { createEmail } = await import('~/lib/repositories')
+          const { createEmail } = await import('~/data-access/emails')
           await createEmail(normalized)
           return new Response(null, { status: 200 })
         } catch (error) {

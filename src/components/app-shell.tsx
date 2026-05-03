@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Inbox, LogOut, PenLine, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { AuthState } from '@/lib/auth'
+import type { AuthState } from '~/fn/auth'
 import { Button } from './ui/button'
 import { Separator } from './ui/separator'
 

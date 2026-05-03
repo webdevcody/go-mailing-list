@@ -6,7 +6,7 @@ import {
   ConfigurationSetDoesNotExistException,
 } from '@aws-sdk/client-ses'
 import type { Email } from '~/db/schema'
-import { listEmails } from './repositories'
+import { listEmails } from '~/data-access/emails'
 
 export type SendEmailInput = {
   subject: string

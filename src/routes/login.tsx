@@ -15,7 +15,7 @@ import {
 } from '~/components/ui/card'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-import { getAuthState, login } from '~/lib/auth'
+import { getAuthState, login } from '~/fn/auth'
 
 export const Route = createFileRoute('/login')({
   loader: () => getAuthState(),
