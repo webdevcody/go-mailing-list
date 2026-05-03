@@ -5,6 +5,12 @@ import { nitro } from 'nitro/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  nitro: {
+    rolldownConfig: {
+      external: ['uglify-js'],
+    },
+    traceDeps: ['uglify-js'],
+  },
   server: {
     port: 3000,
   },

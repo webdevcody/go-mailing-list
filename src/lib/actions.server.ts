@@ -1,7 +1,6 @@
 import { assertAuthenticatedFromServerContext } from './auth.server'
 import { parseEmailLines } from './email-validation'
-import { convertMjml } from './mjml'
-import { sendEmails, type SendEmailInput } from './mailer'
+import type { SendEmailInput } from './mailer'
 import {
   createEmails,
   createTemplate,
@@ -74,17 +73,20 @@ export async function removeTemplateFromServer(id: number) {
 
 export async function convertTemplateFromServer(mjml: string) {
   await assertAuthenticatedFromServerContext()
+  const { convertMjml } = await import('./mjml')
   return await convertMjml(mjml)
 }
 
 export async function sendTemplateToSubscribersFromServer(input: SendEmailInput) {
   await assertAuthenticatedFromServerContext()
+  const { sendEmails } = await import('./mailer')
   void sendEmails(input).catch((error) => console.error('Failed to send bulk email', error))
   return { accepted: true }
 }
 
 export async function sendTestTemplateFromServer(input: SendEmailInput & { tester: string }) {
   await assertAuthenticatedFromServerContext()
+  const { sendEmails } = await import('./mailer')
   void sendEmails(input).catch((error) => console.error('Failed to send test email', error))
   return { accepted: true }
 }
